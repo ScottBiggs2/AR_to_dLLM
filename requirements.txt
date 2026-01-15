@@ -1,0 +1,31 @@
+--extra-index-url https://download.pytorch.org/whl/cu124
+torch==2.5.1
+torchvision==0.20.1
+torchaudio==2.5.1
+
+# Core NLP & Training
+transformers==4.47.0
+accelerate==1.1.1
+deepspeed==0.15.4
+peft==0.13.2
+datasets==3.1.0
+sentencepiece
+tokenizer
+
+# Optimization & Efficiency
+bitsandbytes==0.44.1
+flash-attn==2.6.3 --no-build-isolation
+
+# Utilities
+wandb
+tyro
+omegaconf
+tqdm
+matplotlib
+pytest
+rich
+torchmetrics
+python-dotenv
+
+# dLLM specific
+-e ./dllm

@@ -1,0 +1,41 @@
+# General
+venv/
+.venv/
+.env/
+__pycache__/
+*.pyc
+.DS_Store
+
+# Data & Models
+data/
+models/
+outputs/
+checkpoints/
+*.bin
+*.pt
+*.safetensors
+
+# Logs & W&B
+logs/
+*.out
+*.err
+.wandb
+wandb/
+
+# IDE & Environment
+.env
+.ipynb_checkpoints/
+.vscode/
+.idea/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Sub-repo internal ignores (allows tracking dllm/ source)
+dllm/build/
+dllm/dist/
+dllm/*.egg-info/
+dllm/**/__pycache__/
+dllm/**/.pytest_cache/
