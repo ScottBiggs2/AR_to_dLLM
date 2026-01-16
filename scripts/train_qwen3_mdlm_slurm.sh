@@ -1,16 +1,18 @@
 #!/bin/bash
-#SBATCH --job-name=qwen3-mdlm-baseline
-#SBATCH --nodes=2
-#SBATCH --gres=gpu:8
+#SBATCH --job-name=qwen3-mdlm
+#SBATCH --nodes=1               # Using 1 node with 8 GPUs for now (multigpu partition required for >4)
+#SBATCH --gres=gpu:a100:8       # Request 8 A100s
+# #SBATCH --gres=gpu:h200:8     # Uncomment for H200s (requires partition=gpu with constraints? check docs)
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=320G
-#SBATCH --time=48:00:00
+#SBATCH --time=08:00:00         # 8 hours max
 #SBATCH --output=logs/%x-%j.out
 #SBATCH --err=logs/%x-%j.err
-#SBATCH --partition=mllm_safety
-#SBATCH --quotatype=spot
+#SBATCH --partition=multigpu    # Required for >4 GPUs per job
+#SBATCH --quotatype=spot        # Or reserved/auto
 
-# This template adapts the dllm/scripts/train.slurm.sh for Qwen3-0.6B conversion.
+# Note: The 'multigpu' partition requires specific access approval.
+# If using H200s, usually they are in 'gpu' or specific partitions. Check current docs.
 # Usage: sbatch scripts/train_qwen3_mdlm_slurm.sh
 
 # User should ensure WANDB_API_KEY is in .env or environment

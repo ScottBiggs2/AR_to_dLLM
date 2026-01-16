@@ -34,7 +34,7 @@ import accelerate
 import transformers
 
 import dllm
-from scripts.callbacks import LogGenerationsCallback
+from scripts.callbacks import LogGenerationsCallback, TimeoutCheckpointCallback
 
 logger = dllm.utils.get_default_logger(__name__)
 
@@ -120,6 +120,7 @@ def train():
         ),
     )
     trainer.add_callback(LogGenerationsCallback(tokenizer=tokenizer))
+    trainer.add_callback(TimeoutCheckpointCallback(timeout_hours=7.75))
     trainer.train()
     trainer.save_model(os.path.join(training_args.output_dir, "checkpoint-final"))
     trainer.processing_class.save_pretrained(

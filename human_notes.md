@@ -1,0 +1,1 @@
+I should ssh into the cluster from within Antigravity so that the assistant can see better and I can more quickly coordinate code changes. I'll need to make sure I do it properly to avoid over/rewriting anything important, though. Needs some quick self-education before proceeding, but potentially a significant help. 

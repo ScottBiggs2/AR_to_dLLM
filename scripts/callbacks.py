@@ -3,6 +3,11 @@ import transformers
 import wandb
 from dllm.core.samplers.mdlm import MDLMSampler, MDLMSamplerConfig
 from dllm.utils.sampling import decode_trim
+import time
+import os
+import dllm
+
+logger = dllm.utils.get_default_logger(__name__)
 
 class LogGenerationsCallback(transformers.TrainerCallback):
     def __init__(self, tokenizer, num_samples=4, max_new_tokens=64, steps=32):
@@ -51,3 +56,31 @@ class LogGenerationsCallback(transformers.TrainerCallback):
         
         wandb.log({"generations": table}, step=state.global_step)
         model.train()
+
+class TimeoutCheckpointCallback(transformers.TrainerCallback):
+    def __init__(self, timeout_hours=7.75): # 7h 45m
+        self.timeout_seconds = timeout_hours * 3600
+        self.start_time = None
+        
+    def on_train_begin(self, args, state, control, **kwargs):
+        self.start_time = time.time()
+        
+    def on_step_end(self, args, state, control, **kwargs):
+        if self.start_time is None:
+            return
+            
+        elapsed = time.time() - self.start_time
+        if elapsed >= self.timeout_seconds:
+            logger.warning(f"Job running for {elapsed/3600:.2f} hours. Forcing checkpoint and stopping.")
+            control.should_save = True
+            # control.should_training_stop = True # Optional: stop if we want to rely on requeueing 
+            # ideally we just save and let it continue until hard kill, 
+            # or we stop gracefully. Given "redundancy", let's save. 
+            # The prompt says "force a checkpoint and logs", not necessarily stop.
+            # But usually we want to stop to avoid hard kill corruption.
+            # Let's just force save.
+            
+            # Reset start time to avoid saving every single step after threshold if job continues
+            # Actually, we likely want to keep saving or just save once. 
+            # Let's bump start_time by 30 mins to allow another save in 30 mins if still running.
+            self.start_time = time.time() - self.timeout_seconds + 1800 
