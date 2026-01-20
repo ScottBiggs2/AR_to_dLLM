@@ -10,28 +10,33 @@ To avoid quota limits in your home directory, we will create the conda environme
 SSH into the cluster and run:
 ```bash
 # 1. Go to your personal scratch space
-cd /scratch/$USER
-
 # 2. Create a directory for this project's environments
 mkdir -p project_envs/qwen3_dllm
 
 # 3. Create the conda environment here
-module load anaconda3/2022.05  # Load typical anaconda module
-conda create --prefix /scratch/$USER/project_envs/qwen3_dllm/venv python=3.10 -y
+```bash
+# 1. Load the Anaconda module provided by the cluster (if needed)
+module load anaconda3/2022.05   # Adjust version as appropriate for your system
+
+# 2. Create the conda environment *directly* in scratch (no extra "venv" sub‑folder)
+conda create -p /scratch/$USER/project_envs/qwen3_dllm python=3.10 -y
+
+# 3. Link the environment to a convenient ``.venv`` folder in your project repository
+cd ~/AR_to_dLLM
+ln -sfn /scratch/$USER/project_envs/qwen3_dllm .venv   # ``-sfn`` overwrites any existing link
+
+# 4. Activate the environment
+#   • Using conda’s prefix activation [Working]
+conda activate /scratch/$USER/project_envs/qwen3_dllm
+
+#   • Or, if you prefer the classic virtual‑env style [Ignore it]
+source .venv/bin/activate
 ```
 
-### Step 2: Link to Project Directory
-Navigate to your project code repository (e.g., in `~/AR_to_dLLM`):
-```bash
-cd ~/AR_to_dLLM
+> **Note**: The ``conda`` command you see (`conda () { … }`) is a shell function provided by the cluster’s Anaconda module. There is no ``$HOME/miniconda3`` installation, so sourcing that path will fail. The ``(base)`` prompt indicates the module’s base environment is already active.
 
-# Link the scratch environment to a local .venv folder
-ln -s /scratch/$USER/project_envs/qwen3_dllm/venv .venv
+> **Why we drop the ``/venv`` suffix**: When you use ``--prefix /path/to/venv`` conda creates the environment *inside* the ``venv`` directory, making the actual environment root ``/path/to``. Activating ``/path/to/venv`` therefore fails with `EnvironmentLocationNotFound`. Creating the environment with ``-p /path/to`` (or ``--prefix`` without an extra sub‑folder) makes the root the directory you pass, which can be activated directly.
 
-# Activate
-source activate ./.venv 
-# OR
-conda activate /scratch/$USER/project_envs/qwen3_dllm/venv
 ```
 
 ### Step 3: Install Dependencies
