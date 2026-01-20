@@ -13,7 +13,37 @@ from huggingface_hub import login
 REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.append(str(REPO_ROOT))
 
-from dllm.dllm.utils.data import default_sft_map_fn
+# from dllm.dllm.utils.data import default_sft_map_fn
+
+def default_sft_map_fn(row, *, tokenizer, mask_prompt_loss: bool = True) -> dict:
+    """
+    Build input_ids and labels for SFT.
+
+    Args:
+        row: a dataset row with `messages`
+        tokenizer: a HF tokenizer
+        mask_prompt_loss: whether to mask prompt tokens (set their labels to -100)
+
+    Returns:
+        dict with keys: input_ids, labels, and optionally prompt_len
+    """
+    prompt_response_tokens = tokenizer.apply_chat_template(
+        row["messages"], tokenize=True, add_generation_prompt=False
+    )
+    labels = prompt_response_tokens.copy()
+
+    if mask_prompt_loss:
+        prompt_tokens = tokenizer.apply_chat_template(
+            row["messages"][:-1], tokenize=True, add_generation_prompt=True
+        )
+        labels[: len(prompt_tokens)] = [-100] * len(prompt_tokens)
+        return {
+            "input_ids": prompt_response_tokens,
+            "labels": labels,
+            "prompt_len": len(prompt_tokens),
+        }
+
+    return {"input_ids": prompt_response_tokens, "labels": labels}
 
 load_dotenv(REPO_ROOT / ".env")
 
