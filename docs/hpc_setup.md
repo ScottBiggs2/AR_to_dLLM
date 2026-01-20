@@ -42,6 +42,9 @@ source .venv/bin/activate
 ### Step 3: Install Dependencies
 ```bash
 pip install -r requirements.txt
+# Manually install flash-attn with CUDA module loaded (required for compilation)
+module load cuda/12.4
+pip install flash-attn==2.6.3 --no-build-isolation
 ```
 
 ---
