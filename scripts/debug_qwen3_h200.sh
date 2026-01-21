@@ -43,29 +43,29 @@ source "$HOME/miniconda/etc/profile.d/conda.sh"
 conda activate /scratch/$USER/project_envs/qwen3_dllm
 
 # --- CHECK ACCELERATE CONFIGURATION (DIAGNOSTIC) ---
-accelerate launch \
-    --config_file dllm/scripts/accelerate_configs/zero2.yaml \
-    --num_processes 1 \
-    scripts/check_accelerate.py
-
-# --- REAL TRAINING RUN (COMMENTED OUT FOR DEBUGGING) ---
 # accelerate launch \
 #     --config_file dllm/scripts/accelerate_configs/zero2.yaml \
 #     --num_processes 1 \
-#     scripts/train_qwen3_mdlm.py \
-#     --model_name_or_path "Qwen/Qwen3-0.6B" \
-#     --dataset_args "data/sft/qwen3-0.6b/tulu-3" \
-#     --load_preprocessed_data True \
-#     --max_steps $NUM_STEPS \
-#     --per_device_train_batch_size 4 \
-#     --gradient_accumulation_steps 4 \
-#     --learning_rate 1e-5 \
-#     --warmup_ratio 0.1 \
-#     --output_dir "outputs/debug-qwen3" \
-#     --report_to wandb \
-#     --logging_steps 1 \
-#     --eval_strategy no \
-#     --save_strategy $SAVE_STRATEGY \
-#     --save_steps $SAVE_STEPS
+#     scripts/check_accelerate.py
+
+# --- REAL TRAINING RUN ---
+accelerate launch \
+    --config_file dllm/scripts/accelerate_configs/zero2.yaml \
+    --num_processes 1 \
+    scripts/train_qwen3_mdlm.py \
+    --model_name_or_path "Qwen/Qwen3-0.6B" \
+    --dataset_args "data/sft/qwen3-0.6b/tulu-3" \
+    --load_preprocessed_data True \
+    --max_steps $NUM_STEPS \
+    --per_device_train_batch_size 4 \
+    --gradient_accumulation_steps 4 \
+    --learning_rate 1e-5 \
+    --warmup_ratio 0.1 \
+    --output_dir "outputs/debug-qwen3" \
+    --report_to wandb \
+    --logging_steps 1 \
+    --eval_strategy no \
+    --save_strategy $SAVE_STRATEGY \
+    --save_steps $SAVE_STEPS
 
 echo "Debug run finished."
