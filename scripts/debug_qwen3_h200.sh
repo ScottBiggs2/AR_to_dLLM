@@ -3,7 +3,7 @@
 #SBATCH --partition=gpu
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:h200:1
-#SBATCH --cpus-per-task=8
+#SBATCH --cpus-per-task=4
 #SBATCH --mem=40G
 #SBATCH --time=00:30:00
 #SBATCH --output=logs/debug-%j.out
@@ -30,7 +30,11 @@ fi
 # Environment Setup
 source .env 2>/dev/null
 export HF_HOME="/scratch/$USER/hf_cache"
-mkdir -p "$HF_HOME"
+export TRITON_CACHE_DIR="/scratch/$USER/triton_cache"
+mkdir -p "$HF_HOME" "$TRITON_CACHE_DIR"
+
+# Add the dllm subdirectory to PYTHONPATH to allow importing 'examples'
+export PYTHONPATH=$PYTHONPATH:$(pwd)/dllm
 
 # Load modules and activate environment
 module load cuda/12.3.0
