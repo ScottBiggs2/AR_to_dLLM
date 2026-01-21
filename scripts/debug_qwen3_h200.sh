@@ -34,7 +34,8 @@ mkdir -p "$HF_HOME"
 
 # Load modules and activate environment
 module load cuda/12.3.0
-module load anaconda3/2022.05
+# Initialize Conda from user's install (since module failed and caused fallback to base env)
+source "$HOME/miniconda/etc/profile.d/conda.sh"
 conda activate /scratch/$USER/project_envs/qwen3_dllm
 
 accelerate launch \
