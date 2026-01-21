@@ -96,15 +96,35 @@ def get_tokenizer(model_args) -> transformers.PreTrainedTokenizer:
         RobertaPreTrainedModel,
     )
 
-    from dllm.pipelines.a2d import (
-        A2DLlamaLMHeadModel,
-        A2DQwen2LMHeadModel,
-        A2DQwen3LMHeadModel,
-    )
-    from dllm.pipelines.dream.models.modeling_dream import DreamModel
-    from dllm.pipelines.llada2.models.modeling_llada2_moe import LLaDA2MoeModelLM
-    from dllm.pipelines.llada.models.modeling_llada import LLaDAModelLM
-    from dllm.pipelines.llada.models.modeling_lladamoe import LLaDAMoEModelLM
+    # Safe imports for pipelines that might be missing in some environments
+    try:
+        from dllm.pipelines.a2d import (
+            A2DLlamaLMHeadModel,
+            A2DQwen2LMHeadModel,
+            A2DQwen3LMHeadModel,
+        )
+    except ImportError:
+        # If the models are missing from the __init__.py exposure
+        try: from dllm.pipelines.a2d.models.qwen3.modeling_qwen3 import A2DQwen3LMHeadModel
+        except ImportError: A2DQwen3LMHeadModel = type(None)
+        
+        try: from dllm.pipelines.a2d.models.llama.modeling_llama import A2DLlamaLMHeadModel
+        except ImportError: A2DLlamaLMHeadModel = type(None)
+        
+        try: from dllm.pipelines.a2d.models.qwen2.modeling_qwen2 import A2DQwen2LMHeadModel
+        except ImportError: A2DQwen2LMHeadModel = type(None)
+
+    try: from dllm.pipelines.dream.models.modeling_dream import DreamModel
+    except ImportError: DreamModel = type(None)
+    
+    try: from dllm.pipelines.llada2.models.modeling_llada2_moe import LLaDA2MoeModelLM
+    except ImportError: LLaDA2MoeModelLM = type(None)
+    
+    try: from dllm.pipelines.llada.models.modeling_llada import LLaDAModelLM
+    except ImportError: LLaDAModelLM = type(None)
+    
+    try: from dllm.pipelines.llada.models.modeling_lladamoe import LLaDAMoEModelLM
+    except ImportError: LLaDAMoEModelLM = type(None)
 
     model_name_or_path = getattr(model_args, "model_name_or_path")
 
