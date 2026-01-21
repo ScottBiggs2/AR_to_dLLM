@@ -45,11 +45,13 @@ conda activate /scratch/$USER/project_envs/qwen3_dllm
 # --- CHECK ACCELERATE CONFIGURATION (DIAGNOSTIC) ---
 accelerate launch \
     --config_file dllm/scripts/accelerate_configs/zero2.yaml \
+    --num_processes 1 \
     scripts/check_accelerate.py
 
 # --- REAL TRAINING RUN (COMMENTED OUT FOR DEBUGGING) ---
 # accelerate launch \
 #     --config_file dllm/scripts/accelerate_configs/zero2.yaml \
+#     --num_processes 1 \
 #     scripts/train_qwen3_mdlm.py \
 #     --model_name_or_path "Qwen/Qwen3-0.6B" \
 #     --dataset_args "data/sft/qwen3-0.6b/tulu-3" \
