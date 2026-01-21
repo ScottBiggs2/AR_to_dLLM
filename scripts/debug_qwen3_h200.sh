@@ -26,12 +26,21 @@ else
     SAVE_STEPS=0
 fi
 
+
+# Environment Setup
 source .env 2>/dev/null
+export HF_HOME="/scratch/$USER/hf_cache"
+mkdir -p "$HF_HOME"
+
+# Load modules and activate environment
+module load cuda/12.3.0
+module load anaconda3/2022.05
+conda activate /scratch/$USER/project_envs/qwen3_dllm
 
 accelerate launch \
     --config_file dllm/scripts/accelerate_configs/zero2.yaml \
     scripts/train_qwen3_mdlm.py \
-    --model_name_or_path "models/a2d/Qwen3-0.6B" \
+    --model_name_or_path "Qwen/Qwen3-0.6B" \
     --dataset_args "data/sft/qwen3-0.6b/tulu-3" \
     --load_preprocessed_data True \
     --max_steps $NUM_STEPS \
