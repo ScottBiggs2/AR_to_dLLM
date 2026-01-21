@@ -7,10 +7,10 @@ __pycache__/
 .DS_Store
 
 # Data & Models
-data/
-models/
-outputs/
-checkpoints/
+/data/
+/models/
+/outputs/
+/checkpoints/
 *.bin
 *.pt
 *.safetensors
