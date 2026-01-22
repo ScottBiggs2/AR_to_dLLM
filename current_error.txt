@@ -1,83 +1,40 @@
-srun: error: d1026: task 0: Exited with exit code 1
-  1%|          | 500/76692 [17:29<25:42:35,  1.21s/it]Traceback (most recent call last):
-  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/train_qwen3_mdlm.py", line 21, in <module>
-    base_train()
-  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/examples/a2d/mdlm/sft.py", line 133, in train
-    trainer.train()
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2325, in train
-    return inner_training_loop(
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2756, in _inner_training_loop
-    self._maybe_log_save_evaluate(
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 3221, in _maybe_log_save_evaluate
-    metrics = self._evaluate(trial, ignore_keys_for_eval)
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 3170, in _evaluate
-    metrics = self.evaluate(ignore_keys=ignore_keys_for_eval)
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 4519, in evaluate
-    self.control = self.callback_handler.on_evaluate(self.args, self.state, self.control, output.metrics)
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer_callback.py", line 538, in on_evaluate
-    return self.call_event("on_evaluate", args, state, control, metrics=metrics)
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer_callback.py", line 556, in call_event
-    result = getattr(callback, event)(
-  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/callbacks.py", line 27, in on_evaluate
-    if not accelerate.PartialState().is_main_process:
-NameError: name 'accelerate' is not defined
-[rank0]: Traceback (most recent call last):
-[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/train_qwen3_mdlm.py", line 21, in <module>
-[rank0]:     base_train()
-[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/examples/a2d/mdlm/sft.py", line 133, in train
-[rank0]:     trainer.train()
-[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2325, in train
-[rank0]:     return inner_training_loop(
-[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2756, in _inner_training_loop
-[rank0]:     self._maybe_log_save_evaluate(
-[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 3221, in _maybe_log_save_evaluate
-[rank0]:     metrics = self._evaluate(trial, ignore_keys_for_eval)
-[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 3170, in _evaluate
-[rank0]:     metrics = self.evaluate(ignore_keys=ignore_keys_for_eval)
-[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 4519, in evaluate
-[rank0]:     self.control = self.callback_handler.on_evaluate(self.args, self.state, self.control, output.metrics)
-[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer_callback.py", line 538, in on_evaluate
-[rank0]:     return self.call_event("on_evaluate", args, state, control, metrics=metrics)
-[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer_callback.py", line 556, in call_event
-[rank0]:     result = getattr(callback, event)(
-[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/callbacks.py", line 27, in on_evaluate
-[rank0]:     if not accelerate.PartialState().is_main_process:
-[rank0]: NameError: name 'accelerate' is not defined
-[rank0]:[W122 01:17:38.727578720 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On n
-ormal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare case
-s this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this 
-warning has only been added since PyTorch 2.4 (function operator())
-E0122 01:17:40.076000 23133574963648 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 155039) of binary: /scra
-tch/biggs.s/project_envs/qwen3_dllm/bin/python3.10
+The following values were not passed to `accelerate launch` and had defaults used instead:
+        `--num_machines` was set to a value of `1`
+        `--mixed_precision` was set to a value of `'no'`
+        `--dynamo_backend` was set to a value of `'no'`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+2026-01-22:18:38:15,360 INFO     [__main__.py:279] Verbosity set to INFO
+2026-01-22:18:38:25,874 WARNING  [__main__.py:312]  --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.
+2026-01-22:18:38:25,876 INFO     [__main__.py:376] Selected Tasks: ['bbh_cot_fewshot', 'gsm8k', 'minerva_math', 'mmlu_pro']
+2026-01-22:18:38:25,887 INFO     [evaluator.py:164] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234 | Setting fewsh
+ot manual seed to 1234
+2026-01-22:18:38:25,887 INFO     [evaluator.py:201] Initializing mdlm model, with arguments: {'pretrained': '/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1
+/checkpoint-6500', 'max_new_tokens': 512, 'steps': 32, 'block_size': 128}
+Traceback (most recent call last):
+  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/eval.py", line 744, in <module>
+    cli_evaluate()
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/__main__.py", line 382, in cli_evaluate
+    results = evaluator.simple_evaluate(
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/utils.py", line 397, in _wrapper
+    return fn(*args, **kwargs)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/evaluator.py", line 204, in simple_evaluate
+    lm = lm_eval.api.registry.get_model(model).create_from_arg_string(
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/api/model.py", line 147, in create_from_arg_string
+    return cls(**args, **args2)
+  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/eval.py", line 101, in __init__
+    self.model = dllm.utils.get_model(
+  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/utils/models.py", line 81, in get_model
+    raise ValueError(f"Could not load model from {model_name_or_path}")
+ValueError: Could not load model from /scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoint-6500
 Traceback (most recent call last):
   File "/scratch/biggs.s/project_envs/qwen3_dllm/bin/accelerate", line 7, in <module>
     sys.exit(main())
   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/accelerate_cli.py", line 50, in main
     args.func(args)
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/launch.py", line 1220, in launch_command
-    deepspeed_launcher(args)
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/launch.py", line 906, in deepspeed_launcher
-    distrib_run.run(args)
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/distributed/run.py", line 892, in run
-    elastic_launch(
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
-    return launch_agent(self._config, self._entrypoint, list(args))
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
-    raise ChildFailedError(
-torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
-============================================================
-scripts/train_qwen3_mdlm.py FAILED
-------------------------------------------------------------
-Failures:
-  <NO_OTHER_FAILURES>
-------------------------------------------------------------
-Root Cause (first observed failure):
-[0]:
-  time      : 2026-01-22_01:17:40
-  host      : d1026
-  rank      : 0 (local_rank: 0)
-  exitcode  : 1 (pid: 155039)
-  error_file: <N/A>
-  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
-============================================================
-srun: error: d1026: task 0: Exited with exit code 1
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/launch.py", line 1235, in launch_command
+    simple_launcher(args)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/launch.py", line 823, in simple_launcher
+    raise subprocess.CalledProcessError(returncode=process.returncode, cmd=cmd)
+subprocess.CalledProcessError: Command '['/scratch/biggs.s/project_envs/qwen3_dllm/bin/python3.10', 'dllm/dllm/pipelines/a2d/eval.py', '--model', 'mdlm', '--
+tasks', 'gsm8k,minerva_math,bbh_cot_fewshot,mmlu_pro', '--limit', '-1', '--model_args', 'pretrained=/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoi
+nt-6500,max_new_tokens=512,steps=32,block_size=128', '--apply_chat_template', '--output_path', 'eval_results/checkpoint-6500_20260122_183747']' returned non-

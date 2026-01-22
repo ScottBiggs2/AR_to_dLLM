@@ -65,6 +65,7 @@ def get_model(
         config.use_rope = model_args.use_rope
             
     model = None
+    errors = []
     # Strategy: try ForMaskedLM -> ForCausalLM -> AutoModel
     for model_class in [
         transformers.AutoModelForMaskedLM,
@@ -74,11 +75,13 @@ def get_model(
         try:
             model = model_class.from_pretrained(model_name_or_path, **params)
             break
-        except Exception:
+        except Exception as e:
+            errors.append(f"{model_class.__name__}: {str(e)}")
             continue
             
     if model is None:
-        raise ValueError(f"Could not load model from {model_name_or_path}")
+        error_msg = "\n".join(errors)
+        raise ValueError(f"Could not load model from {model_name_or_path}. Underlying errors:\n{error_msg}")
 
     # --- if quantized, prepare for LoRA / QLoRA training ---
     if load_in_4bit and quant_config is not None:

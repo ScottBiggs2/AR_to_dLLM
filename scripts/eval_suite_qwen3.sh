@@ -44,6 +44,9 @@ mkdir -p "$RESULTS_DIR"
 # lm-eval will create a directory at output_path if it doesn't exist
 accelerate launch \
     --num_processes 1 \
+    --num_machines 1 \
+    --mixed_precision no \
+    --dynamo_backend no \
     dllm/dllm/pipelines/a2d/eval.py \
     --model mdlm \
     --tasks "$TASKS" \

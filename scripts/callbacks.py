@@ -1,6 +1,6 @@
 import torch
 import transformers
-import accelerate
+from accelerate import PartialState
 import wandb
 from dllm.core.samplers.mdlm import MDLMSampler, MDLMSamplerConfig
 from dllm.utils.sampling import decode_trim
@@ -25,7 +25,7 @@ class LogGenerationsCallback(transformers.TrainerCallback):
         self.sampler = None
 
     def on_evaluate(self, args, state, control, model=None, **kwargs):
-        if not accelerate.PartialState().is_main_process:
+        if not PartialState().is_main_process:
             return
         
         if model is None:
