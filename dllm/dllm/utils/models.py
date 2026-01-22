@@ -46,7 +46,7 @@ def get_model(
         )
 
     params = {
-        "dtype": dtype,
+        "torch_dtype": dtype,
         "device_map": device_map,
         "quantization_config": quant_config,
         "attn_implementation": attn_implementation,
@@ -56,6 +56,18 @@ def get_model(
     if config is None:
         try:
             config = transformers.AutoConfig.from_pretrained(model_name_or_path, **params)
+            
+            # For Qwen3/Qwen2 models, we might need to cast to A2D versions for MaskedLM support
+            if type(config) == transformers.Qwen2Config:
+                 from dllm.pipelines.a2d.models.qwen2.modeling_qwen2 import A2DQwen2Config
+                 config = A2DQwen2Config(**config.to_dict())
+            elif type(config) == transformers.Qwen3Config:
+                 from dllm.pipelines.a2d.models.qwen3.modeling_qwen3 import A2DQwen3Config
+                 config = A2DQwen3Config(**config.to_dict())
+            elif type(config) == transformers.LlamaConfig:
+                 from dllm.pipelines.a2d.models.llama.modeling_llama import A2DLlamaConfig
+                 config = A2DLlamaConfig(**config.to_dict())
+
             params["config"] = config
         except Exception:
             pass

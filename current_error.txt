@@ -1,14 +1,3 @@
-The following values were not passed to `accelerate launch` and had defaults used instead:
-        `--num_machines` was set to a value of `1`
-        `--mixed_precision` was set to a value of `'no'`
-        `--dynamo_backend` was set to a value of `'no'`
-To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
-2026-01-22:18:38:15,360 INFO     [__main__.py:279] Verbosity set to INFO
-2026-01-22:18:38:25,874 WARNING  [__main__.py:312]  --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.
-2026-01-22:18:38:25,876 INFO     [__main__.py:376] Selected Tasks: ['bbh_cot_fewshot', 'gsm8k', 'minerva_math', 'mmlu_pro']
-2026-01-22:18:38:25,887 INFO     [evaluator.py:164] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234 | Setting fewsh
-ot manual seed to 1234
-2026-01-22:18:38:25,887 INFO     [evaluator.py:201] Initializing mdlm model, with arguments: {'pretrained': '/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1
 /checkpoint-6500', 'max_new_tokens': 512, 'steps': 32, 'block_size': 128}
 Traceback (most recent call last):
   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/eval.py", line 744, in <module>
@@ -23,9 +12,18 @@ Traceback (most recent call last):
     return cls(**args, **args2)
   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/eval.py", line 101, in __init__
     self.model = dllm.utils.get_model(
-  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/utils/models.py", line 81, in get_model
-    raise ValueError(f"Could not load model from {model_name_or_path}")
-ValueError: Could not load model from /scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoint-6500
+  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/utils/models.py", line 84, in get_model
+    raise ValueError(f"Could not load model from {model_name_or_path}. Underlying errors:\n{error_msg}")
+ValueError: Could not load model from /scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoint-6500. Underlying errors:
+AutoModelForMaskedLM: Unrecognized configuration class <class 'transformers.models.qwen3.configuration_qwen3.Qwen3Config'> for this kind of AutoModel: AutoMo
+delForMaskedLM.
+Model type should be one of AlbertConfig, BartConfig, BertConfig, BigBirdConfig, CamembertConfig, ConvBertConfig, Data2VecTextConfig, DebertaConfig, DebertaV
+2Config, DistilBertConfig, ElectraConfig, ErnieConfig, EsmConfig, FlaubertConfig, FNetConfig, FunnelConfig, IBertConfig, LayoutLMConfig, LongformerConfig, Lu
+keConfig, MBartConfig, MegaConfig, MegatronBertConfig, MobileBertConfig, ModernBertConfig, MPNetConfig, MraConfig, MvpConfig, NezhaConfig, NystromformerConfi
+g, PerceiverConfig, QDQBertConfig, ReformerConfig, RemBertConfig, RobertaConfig, RobertaPreLayerNormConfig, RoCBertConfig, RoFormerConfig, SqueezeBertConfig,
+ TapasConfig, Wav2Vec2Config, XLMConfig, XLMRobertaConfig, XLMRobertaXLConfig, XmodConfig, YosoConfig, A2DQwen3Config.
+AutoModelForCausalLM: 'str' object has no attribute 'is_floating_point'
+AutoModel: 'str' object has no attribute 'is_floating_point'
 Traceback (most recent call last):
   File "/scratch/biggs.s/project_envs/qwen3_dllm/bin/accelerate", line 7, in <module>
     sys.exit(main())
@@ -37,4 +35,6 @@ Traceback (most recent call last):
     raise subprocess.CalledProcessError(returncode=process.returncode, cmd=cmd)
 subprocess.CalledProcessError: Command '['/scratch/biggs.s/project_envs/qwen3_dllm/bin/python3.10', 'dllm/dllm/pipelines/a2d/eval.py', '--model', 'mdlm', '--
 tasks', 'gsm8k,minerva_math,bbh_cot_fewshot,mmlu_pro', '--limit', '-1', '--model_args', 'pretrained=/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoi
-nt-6500,max_new_tokens=512,steps=32,block_size=128', '--apply_chat_template', '--output_path', 'eval_results/checkpoint-6500_20260122_183747']' returned non-
+nt-6500,max_new_tokens=512,steps=32,block_size=128', '--apply_chat_template', '--output_path', 'eval_results/checkpoint-6500_20260122_184954']' returned non-
+zero exit status 1.
+(/scratch/biggs.s/project_envs/qwen3_dllm) [biggs.s@explorer-02 AR_to_dLLM]$ 
