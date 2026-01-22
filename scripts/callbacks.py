@@ -24,7 +24,7 @@ class LogGenerationsCallback(transformers.TrainerCallback):
         self.sampler = None
 
     def on_evaluate(self, args, state, control, model=None, **kwargs):
-        if not state.is_main_process:
+        if not accelerate.PartialState().is_main_process:
             return
         
         if model is None:
