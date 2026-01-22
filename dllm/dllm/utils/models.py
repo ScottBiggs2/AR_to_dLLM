@@ -178,6 +178,7 @@ def get_tokenizer(model_args) -> transformers.PreTrainedTokenizer:
         model_cls,
         (BertPreTrainedModel, RobertaPreTrainedModel, ModernBertPreTrainedModel),
     ):
+        tokenizer.add_special_tokens({"mask_token": "[MASK]"})
         tokenizer.eot_token = "[/Answer]"
         tokenizer.chat_template = """\
 {% if messages[0]['role'] == 'system' %}
@@ -216,4 +217,10 @@ def get_tokenizer(model_args) -> transformers.PreTrainedTokenizer:
         tokenizer.eot_token_id = tokenizer.convert_tokens_to_ids(tokenizer.eot_token)
     else:
         print_main("no tokenizer customization for model class:", model_cls)
+
+    # Global fallback: ensure mask_token is always present for diffusion models
+    if tokenizer.mask_token is None:
+        # Avoid overriding if already set by customization above
+        tokenizer.add_special_tokens({"mask_token": "<|mask|>"})
+        
     return tokenizer
