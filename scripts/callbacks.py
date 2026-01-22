@@ -1,5 +1,6 @@
 import torch
 import transformers
+import accelerate
 import wandb
 from dllm.core.samplers.mdlm import MDLMSampler, MDLMSamplerConfig
 from dllm.utils.sampling import decode_trim

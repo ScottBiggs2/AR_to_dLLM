@@ -1,9 +1,53 @@
-[rank0]: AttributeError: 'TrainerState' object has no attribute 'is_main_process'
-[rank0]:[W122 00:41:17.871718083 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On n
+srun: error: d1026: task 0: Exited with exit code 1
+  1%|          | 500/76692 [17:29<25:42:35,  1.21s/it]Traceback (most recent call last):
+  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/train_qwen3_mdlm.py", line 21, in <module>
+    base_train()
+  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/examples/a2d/mdlm/sft.py", line 133, in train
+    trainer.train()
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2325, in train
+    return inner_training_loop(
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2756, in _inner_training_loop
+    self._maybe_log_save_evaluate(
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 3221, in _maybe_log_save_evaluate
+    metrics = self._evaluate(trial, ignore_keys_for_eval)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 3170, in _evaluate
+    metrics = self.evaluate(ignore_keys=ignore_keys_for_eval)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 4519, in evaluate
+    self.control = self.callback_handler.on_evaluate(self.args, self.state, self.control, output.metrics)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer_callback.py", line 538, in on_evaluate
+    return self.call_event("on_evaluate", args, state, control, metrics=metrics)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer_callback.py", line 556, in call_event
+    result = getattr(callback, event)(
+  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/callbacks.py", line 27, in on_evaluate
+    if not accelerate.PartialState().is_main_process:
+NameError: name 'accelerate' is not defined
+[rank0]: Traceback (most recent call last):
+[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/train_qwen3_mdlm.py", line 21, in <module>
+[rank0]:     base_train()
+[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/examples/a2d/mdlm/sft.py", line 133, in train
+[rank0]:     trainer.train()
+[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2325, in train
+[rank0]:     return inner_training_loop(
+[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2756, in _inner_training_loop
+[rank0]:     self._maybe_log_save_evaluate(
+[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 3221, in _maybe_log_save_evaluate
+[rank0]:     metrics = self._evaluate(trial, ignore_keys_for_eval)
+[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 3170, in _evaluate
+[rank0]:     metrics = self.evaluate(ignore_keys=ignore_keys_for_eval)
+[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 4519, in evaluate
+[rank0]:     self.control = self.callback_handler.on_evaluate(self.args, self.state, self.control, output.metrics)
+[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer_callback.py", line 538, in on_evaluate
+[rank0]:     return self.call_event("on_evaluate", args, state, control, metrics=metrics)
+[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer_callback.py", line 556, in call_event
+[rank0]:     result = getattr(callback, event)(
+[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/callbacks.py", line 27, in on_evaluate
+[rank0]:     if not accelerate.PartialState().is_main_process:
+[rank0]: NameError: name 'accelerate' is not defined
+[rank0]:[W122 01:17:38.727578720 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On n
 ormal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare case
 s this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this 
 warning has only been added since PyTorch 2.4 (function operator())
-E0122 00:41:19.088000 23338769383872 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 142789) of binary: /scra
+E0122 01:17:40.076000 23133574963648 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 155039) of binary: /scra
 tch/biggs.s/project_envs/qwen3_dllm/bin/python3.10
 Traceback (most recent call last):
   File "/scratch/biggs.s/project_envs/qwen3_dllm/bin/accelerate", line 7, in <module>
@@ -29,12 +73,11 @@ Failures:
 ------------------------------------------------------------
 Root Cause (first observed failure):
 [0]:
-  time      : 2026-01-22_00:41:19
+  time      : 2026-01-22_01:17:40
   host      : d1026
   rank      : 0 (local_rank: 0)
-  exitcode  : 1 (pid: 142789)
+  exitcode  : 1 (pid: 155039)
   error_file: <N/A>
   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
 ============================================================
 srun: error: d1026: task 0: Exited with exit code 1
-(base) [biggs.s@explorer-01 AR_to_dLLM]$ 
