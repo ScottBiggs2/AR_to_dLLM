@@ -59,13 +59,7 @@ done
 
 echo "===== Script Variables ====="
 echo "--accelerate_config ${accelerate_config}"
-echo "Running data setup..."
-# Default output to scratch if no arguments provided
-if [ ${#FORWARD_ARGS[@]} -eq 0 ]; then
-    python scripts/setup_data.py --output "/scratch/$USER/data/sft/qwen3-0.6b/tulu-3"
-else
-    python scripts/setup_data.py "${FORWARD_ARGS[@]}"
-fi
+echo "--script_path ${script_path}"
 echo "--forwarded script args:"
 printf '%s\n' "${FORWARD_ARGS[@]}" | xargs -n 2
 echo "============================"

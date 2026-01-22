@@ -175,7 +175,17 @@ class MDLMTrainer(transformers.Trainer):
         # The model predicts clean tokens given noised inputs.
         outputs = model(input_ids=noised_input_ids, attention_mask=attention_mask)
         outputs = self._postprocess_outputs(outputs)
-        logits = outputs.logits
+        logits = getattr(outputs, "logits", None)
+        if logits is None:
+            if isinstance(outputs, torch.Tensor):
+                logits = outputs
+            elif hasattr(outputs, "last_hidden_state") and hasattr(model, "lm_head"):
+                logits = model.lm_head(outputs.last_hidden_state)
+            else:
+                raise AttributeError(
+                    f"Model output type {type(outputs)} has no 'logits' and no obvious way to compute them. "
+                    "Ensure you are using a ...ForCausalLM or ...ForMaskedLM class."
+                )
 
         # === 4. Compute per-token loss weights ===
         # Depending on the configuration, weights may depend on timestep t

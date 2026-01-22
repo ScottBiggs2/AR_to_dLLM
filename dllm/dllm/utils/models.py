@@ -61,11 +61,18 @@ def get_model(
         if hasattr(model_args, "use_rope") and hasattr(config, "use_rope"):
             config.use_rope = model_args.use_rope
             
-        model = transformers.AutoModelForMaskedLM.from_pretrained(
-            model_name_or_path, **params
-        )
-    except Exception:
-        model = transformers.AutoModel.from_pretrained(model_name_or_path, **params)
+        try:
+            model = transformers.AutoModelForMaskedLM.from_pretrained(
+                model_name_or_path, **params
+            )
+        except Exception:
+            try:
+                # Try CausalLM as most AR models (like Qwen) have this head which we can repurpose
+                model = transformers.AutoModelForCausalLM.from_pretrained(
+                    model_name_or_path, **params
+                )
+            except Exception:
+                model = transformers.AutoModel.from_pretrained(model_name_or_path, **params)
 
     # --- if quantized, prepare for LoRA / QLoRA training ---
     if load_in_4bit and quant_config is not None:
