@@ -51,6 +51,13 @@ class MDLMTrainer(transformers.Trainer):
         self.loss_norm_type = args.loss_norm_type
         self.right_shift_logits = args.right_shift_logits
 
+        self.meter = OnEvaluateMetricsCallback(
+            trainer=self,
+            metrics={
+                "nll": NLLMetric(),
+                "ppl": PPLMetric(),
+            },
+        )
         self.add_callback(self.meter)
         
         self.masking_curriculum = None
