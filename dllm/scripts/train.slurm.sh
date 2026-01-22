@@ -67,7 +67,7 @@ echo "============================"
 # ===== Launch =====
 srun --nodes="${NUM_NODES}" --ntasks="${NUM_NODES}" --nodelist="${SLURM_JOB_NODELIST}" \
   accelerate launch \
-    --config_file "scripts/accelerate_configs/${accelerate_config}.yaml" \
+    --config_file "dllm/scripts/accelerate_configs/${accelerate_config}.yaml" \
     --num_machines "${NUM_NODES}" \
     --num_processes "${WORLD_SIZE}" \
     --main_process_ip "${MASTER_ADDR}" \
