@@ -25,11 +25,12 @@ echo "PYTHONPATH: $PYTHONPATH"
 # 3. Package Verification
 echo -e "\n--- Verifying Core Packages ---"
 python3 -c "
-import torch, transformers, accelerate, lm_eval, dllm
+import torch, transformers, accelerate, lm_eval, evaluate, dllm
 print(f'torch:        {torch.__version__}')
 print(f'transformers: {transformers.__version__}')
 print(f'accelerate:   {accelerate.__version__}')
 print(f'lm-eval:      {lm_eval.__version__}')
+print(f'evaluate:     {evaluate.__version__}')
 print('SUCCESS: All core imports working.')
 " || { echo "ERROR: One or more core packages missing or failing to import."; exit 1; }
 

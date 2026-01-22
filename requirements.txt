@@ -28,3 +28,11 @@ python-dotenv
 
 # dLLM specific
 -e ./dllm
+
+# === Evaluation Suite ===
+lm-eval==0.4.5
+evaluate>=0.4.0
+sqlitedict
+pytablewriter
+rouge_score
+sacrebleu
