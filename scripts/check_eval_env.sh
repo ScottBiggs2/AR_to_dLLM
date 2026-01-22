@@ -26,11 +26,16 @@ echo "PYTHONPATH: $PYTHONPATH"
 echo -e "\n--- Verifying Core Packages ---"
 python3 -c "
 import torch, transformers, accelerate, lm_eval, evaluate, dllm
+import importlib.metadata
+def get_ver(pkg):
+    try: return importlib.metadata.version(pkg)
+    except: return 'N/A'
+
 print(f'torch:        {torch.__version__}')
 print(f'transformers: {transformers.__version__}')
 print(f'accelerate:   {accelerate.__version__}')
-print(f'lm-eval:      {lm_eval.__version__}')
-print(f'evaluate:     {evaluate.__version__}')
+print(f'lm-eval:      {get_ver(\"lm_eval\")}')
+print(f'evaluate:     {get_ver(\"evaluate\")}')
 print('SUCCESS: All core imports working.')
 " || { echo "ERROR: One or more core packages missing or failing to import."; exit 1; }
 
