@@ -10,7 +10,7 @@
 #SBATCH --error=logs/eval-suite-%j.err
 
 # Defaults
-CHECKPOINT_PATH=${1:-"/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoint-6000"}
+CHECKPOINT_PATH=${1:-"/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoint-6500"}
 TASKS=${2:-"gsm8k,math,bigbench_hard,mmlu_pro"}
 LIMIT=${3:--1}  # -1 for full evaluation
 STEPS=${4:-32}  # Diffusion steps
