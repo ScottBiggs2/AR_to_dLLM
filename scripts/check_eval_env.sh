@@ -49,5 +49,20 @@ else
     echo "Make sure to pass the correct path when running the eval suite."
 fi
 
+echo -e "\n--- Available Tasks (Preview) ---"
+python3 -c "
+import lm_eval
+from lm_eval.tasks import TaskManager
+tm = TaskManager()
+tasks = tm.all_tasks
+print(f'Total tasks available: {len(tasks)}')
+print('Common aliases check:')
+for candidate in ['gsm8k', 'minerva_math', 'math_word_problems', 'bbh', 'bbh_cot_fewshot', 'mmlu_pro']:
+    if candidate in tasks:
+        print(f'  [FOUND] {candidate}')
+    else:
+        print(f'  [MISSING] {candidate}')
+"
+
 echo -e "\n--- All checks passed! ---"
 echo "You are ready to submit the job with: sbatch scripts/eval_suite_qwen3.sh"

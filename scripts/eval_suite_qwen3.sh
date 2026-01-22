@@ -11,7 +11,7 @@
 
 # Defaults
 CHECKPOINT_PATH=${1:-"/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoint-6500"}
-TASKS=${2:-"gsm8k,math,bigbench_hard,mmlu_pro"}
+TASKS=${2:-"gsm8k,minerva_math,bbh_cot_fewshot,mmlu_pro"}
 LIMIT=${3:--1}  # -1 for full evaluation
 STEPS=${4:-32}  # Diffusion steps
 BLOCK_SIZE=${5:-128}
