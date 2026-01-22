@@ -1,11 +1,11 @@
 #!/bin/bash
 #SBATCH --job-name=qwen3-sft-a100
-#SBATCH --nodes=2
+#SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --gres=gpu:a100:4
-#SBATCH --cpus-per-task=8
-#SBATCH --mem=96G
-#SBATCH --time=08:00:00        # Correct 8-hour limit for gpu partition
+#SBATCH --gres=gpu:a100:1
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=32G
+#SBATCH --time=04:00:00        # 4 hours is plenty for a 1-GPU debug/SFT run
 #SBATCH --partition=gpu
 #SBATCH --output=logs/%x-%j.out
 #SBATCH --err=logs/%x-%j.err
