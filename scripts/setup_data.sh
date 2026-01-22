@@ -13,4 +13,9 @@ export HF_HOME="/scratch/$USER/hf_cache"
 mkdir -p "$HF_HOME"
 
 echo "Running data setup..."
-python scripts/setup_data.py "$@"
+# Default output to scratch if no arguments provided
+if [ $# -eq 0 ]; then
+    python scripts/setup_data.py --output "/scratch/$USER/data/sft/qwen3-0.6b/tulu-3"
+else
+    python scripts/setup_data.py "$@"
+fi

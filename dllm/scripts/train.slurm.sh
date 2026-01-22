@@ -36,7 +36,7 @@ done
 echo "============================"
 
 # ===== Environment =====
-export NCCL_ASYNC_ERROR_HANDLING=1
+export TORCH_NCCL_ASYNC_ERROR_HANDLING=1
 export PYTHONPATH=".:./dllm:$PYTHONPATH"
 
 # ===== Default options =====
@@ -59,7 +59,13 @@ done
 
 echo "===== Script Variables ====="
 echo "--accelerate_config ${accelerate_config}"
-echo "--script_path ${script_path}"
+echo "Running data setup..."
+# Default output to scratch if no arguments provided
+if [ ${#FORWARD_ARGS[@]} -eq 0 ]; then
+    python scripts/setup_data.py --output "/scratch/$USER/data/sft/qwen3-0.6b/tulu-3"
+else
+    python scripts/setup_data.py "${FORWARD_ARGS[@]}"
+fi
 echo "--forwarded script args:"
 printf '%s\n' "${FORWARD_ARGS[@]}" | xargs -n 2
 echo "============================"
