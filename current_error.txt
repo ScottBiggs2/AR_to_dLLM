@@ -1,70 +1,24 @@
-(base) [biggs.s@explorer-01 AR_to_dLLM]$ ls
-usage: setup_data.py [-h] [--model MODEL] [--output OUTPUT]
-setup_data.py: error: unrecognized arguments: --model_name_or_path Qwen/Qwen3-0.6B --dataset_args /scratch/biggs.s/data/sft/qwen3-0.6b/tulu-3 --load_preproc
-essed_data True --per_device_train_batch_size 8 --gradient_accumulation_steps 4 --learning_rate 2e-5 --warmup_ratio 0.1 --output_dir /scratch/biggs.s/output
-s/qwen3-mdlm-tulu3-sft-v1 --report_to wandb --run_name qwen3-mdlm-tulu3-sft-v1 --logging_steps 10 --num_train_epochs 3 --eval_strategy steps --eval_steps 50
-0 --per_device_eval_batch_size 8 --save_strategy steps --save_steps 500
-W0121 23:41:35.862000 22690896671168 torch/distributed/run.py:771] master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
-The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accord
-ingly, being updated with the tokenizer's values. Updated tokens: {'pad_token_id': 151643}.
-Gradient accumulation steps mismatch: GradientAccumulationPlugin has 1, DeepSpeed config has 4. Using DeepSpeed's value.
-wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /home/biggs.s/.netrc.
-wandb: Currently logged in as: scottbiggs2001 (scottbiggs2001-northeastern-university) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Tracking run with wandb version 0.24.0
-wandb: Run data is saved locally in /home/biggs.s/AR_to_dLLM/AR_to_dLLM/wandb/run-20260121_234306-uvdkl633
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run qwen3-mdlm-tulu3-sft-v1
-wandb: ⭐️ View project at https://wandb.ai/scottbiggs2001-northeastern-university/huggingface
-wandb: 🚀 View run at https://wandb.ai/scottbiggs2001-northeastern-university/huggingface/runs/uvdkl633
-^M  0%|          | 0/76692 [00:00<?, ?it/s]Traceback (most recent call last):
-  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/train_qwen3_mdlm.py", line 21, in <module>
-    base_train()
-  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/examples/a2d/mdlm/sft.py", line 124, in train
-    trainer.train()
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2325, in train
-    return inner_training_loop(
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2674, in _inner_training_loop
-    tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 4020, in training_step
-    loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
-  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/core/trainers/mdlm.py", line 178, in compute_loss
-
-wandb: 🚀 View run at https://wandb.ai/scottbiggs2001-northeastern-university/huggingface/runs/uvdkl633
-^M  0%|          | 0/76692 [00:00<?, ?it/s]Traceback (most recent call last):
-  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/train_qwen3_mdlm.py", line 21, in <module>
-    base_train()
-  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/examples/a2d/mdlm/sft.py", line 124, in train
-    trainer.train()
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2325, in train
-    return inner_training_loop(
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2674, in _inner_training_loop
-    tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 4020, in training_step
-    loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
-  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/core/trainers/mdlm.py", line 178, in compute_loss
-    logits = outputs.logits
-AttributeError: 'BaseModelOutputWithPast' object has no attribute 'logits'
+W0121 23:50:22.116000 22979918676416 torch/distributed/run.py:771] master_addr is only used for static rdzv_backend and when rdzv_endpoint is not specified.
 [rank0]: Traceback (most recent call last):
-[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/train_qwen3_mdlm.py", line 21, in <module>
-[rank0]:     base_train()
-[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/examples/a2d/mdlm/sft.py", line 124, in train
-[rank0]:     trainer.train()
-[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2325, in train
-[rank0]:     return inner_training_loop(
-[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2674, in _inner_training_loop
-[rank0]:     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
-[rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 4020, in training_step
-[rank0]:     loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
-[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/core/trainers/mdlm.py", line 178, in compute_loss
-[rank0]:     logits = outputs.logits
-[rank0]: AttributeError: 'BaseModelOutputWithPast' object has no attribute 'logits'
-[rank0]:[W121 23:43:10.011192289 ProcessGroupNCCL.cpp:1168] Warning: WARNING: process group has NOT been destroyed before we destruct ProcessGroupNCCL. On n
-ormal program exit, the application should call destroy_process_group to ensure that any pending NCCL operations have finished in this process. In rare case
-s this process can exit before this point and block the progress of another member of the process group. This constraint has always been present,  but this 
-warning has only been added since PyTorch 2.4 (function operator())
-
-
-E0121 23:43:12.197000 22690896671168 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 142193) of binary: /scra
+[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/train_qwen3_mdlm.py", line 1, in <module>
+[rank0]:     from examples.a2d.mdlm.sft import train as base_train
+[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/examples/a2d/mdlm/sft.py", line 36, in <module>
+[rank0]:     import dllm
+[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/__init__.py", line 1, in <module>
+[rank0]:     from . import core, data, pipelines, utils
+[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/core/__init__.py", line 1, in <module>
+[rank0]:     from dllm.core import samplers, schedulers, trainers
+[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/core/trainers/__init__.py", line 1, in <module>
+[rank0]:     from . import bd3lm, mdlm
+[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/core/trainers/bd3lm.py", line 17, in <module>
+[rank0]:     from dllm.utils.collators import CollatorWrapper
+[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/utils/__init__.py", line 1, in <module>
+[rank0]:     from . import chat, collators, configs, data, models, sampling, utils, visualizers
+[rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/utils/models.py", line 78
+[rank0]:     if load_in_4bit and quant_config is not None:
+[rank0]:     ^^
+[rank0]: SyntaxError: expected 'except' or 'finally' block
+E0121 23:50:34.168000 22979918676416 torch/distributed/elastic/multiprocessing/api.py:833] failed (exitcode: 1) local_rank: 0 (pid: 142531) of binary: /scra
 tch/biggs.s/project_envs/qwen3_dllm/bin/python3.10
 Traceback (most recent call last):
   File "/scratch/biggs.s/project_envs/qwen3_dllm/bin/accelerate", line 7, in <module>
@@ -80,6 +34,8 @@ Traceback (most recent call last):
   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 133, in __call__
     return launch_agent(self._config, self._entrypoint, list(args))
   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
+"logs/qwen3-sft-a100-3886036.err" 53L, 3620B  
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/distributed/launcher/api.py", line 264, in launch_agent
     raise ChildFailedError(
 torch.distributed.elastic.multiprocessing.errors.ChildFailedError:
 ============================================================
@@ -90,10 +46,10 @@ Failures:
 ------------------------------------------------------------
 Root Cause (first observed failure):
 [0]:
-  time      : 2026-01-21_23:43:12
+  time      : 2026-01-21_23:50:34
   host      : d1026
   rank      : 0 (local_rank: 0)
-  exitcode  : 1 (pid: 142193)
+  exitcode  : 1 (pid: 142531)
   error_file: <N/A>
   traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
 ============================================================

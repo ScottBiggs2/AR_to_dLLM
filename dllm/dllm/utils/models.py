@@ -53,26 +53,32 @@ def get_model(
         "config": config,
     }
 
-    try:
-        if config is None:
-            config = transformers.AutoConfig.from_pretrained(model_name_or_path, **params)
-        
-        # Apply DrOPE if specified in model_args
-        if hasattr(model_args, "use_rope") and hasattr(config, "use_rope"):
-            config.use_rope = model_args.use_rope
-            
+    if config is None:
         try:
-            model = transformers.AutoModelForMaskedLM.from_pretrained(
-                model_name_or_path, **params
-            )
+            config = transformers.AutoConfig.from_pretrained(model_name_or_path, **params)
+            params["config"] = config
         except Exception:
-            try:
-                # Try CausalLM as most AR models (like Qwen) have this head which we can repurpose
-                model = transformers.AutoModelForCausalLM.from_pretrained(
-                    model_name_or_path, **params
-                )
-            except Exception:
-                model = transformers.AutoModel.from_pretrained(model_name_or_path, **params)
+            pass
+        
+    # Apply DrOPE if specified in model_args
+    if config is not None and hasattr(model_args, "use_rope") and hasattr(config, "use_rope"):
+        config.use_rope = model_args.use_rope
+            
+    model = None
+    # Strategy: try ForMaskedLM -> ForCausalLM -> AutoModel
+    for model_class in [
+        transformers.AutoModelForMaskedLM,
+        transformers.AutoModelForCausalLM,
+        transformers.AutoModel,
+    ]:
+        try:
+            model = model_class.from_pretrained(model_name_or_path, **params)
+            break
+        except Exception:
+            continue
+            
+    if model is None:
+        raise ValueError(f"Could not load model from {model_name_or_path}")
 
     # --- if quantized, prepare for LoRA / QLoRA training ---
     if load_in_4bit and quant_config is not None:
