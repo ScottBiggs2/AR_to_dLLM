@@ -48,7 +48,8 @@ bash dllm/scripts/train.slurm.sh \
     --num_train_epochs 3 \
     --eval_strategy steps \
     --eval_steps 500 \
-    --per_device_eval_batch_size 8 \
+    --per_device_eval_batch_size 16 \
+    --max_eval_samples 500 \
     --save_strategy steps \
     --save_steps 500
 

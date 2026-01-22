@@ -53,6 +53,10 @@ class DataArguments(dllm.utils.DataArguments):
         default=True,
         metadata={"help": "Whether to mask the loss on the prompt tokens"},
     )
+    max_eval_samples: int = field(
+        default=500,
+        metadata={"help": "Maximum number of samples to use for evaluation"},
+    )
 
 
 @dataclass
@@ -98,6 +102,11 @@ def train():
             )
         # truncate / filter long sequences if needed
         dataset = dllm.utils.post_process_dataset(dataset, data_args)
+        
+        # Subset eval dataset for speed
+        if "test" in dataset and len(dataset["test"]) > data_args.max_eval_samples:
+            logger.info(f"Subsetting eval dataset from {len(dataset['test'])} to {data_args.max_eval_samples}")
+            dataset["test"] = dataset["test"].select(range(data_args.max_eval_samples))
 
     # ----- Training --------------------------------------------------------------
     accelerate.PartialState().wait_for_everyone()
