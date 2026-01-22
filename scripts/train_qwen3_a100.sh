@@ -50,9 +50,6 @@ bash dllm/scripts/train.slurm.sh \
     --eval_steps 500 \
     --per_device_eval_batch_size 8 \
     --save_strategy steps \
-    --save_steps 500 \
-    --per_device_eval_batch_size 8 \
-    --save_strategy steps \
     --save_steps 500
 
 echo "Training finished."

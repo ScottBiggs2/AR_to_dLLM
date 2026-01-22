@@ -37,7 +37,7 @@ echo "============================"
 
 # ===== Environment =====
 export NCCL_ASYNC_ERROR_HANDLING=1
-export PYTHONPATH=.
+export PYTHONPATH=".:./dllm:$PYTHONPATH"
 
 # ===== Default options =====
 accelerate_config="zero2"
