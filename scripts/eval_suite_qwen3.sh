@@ -33,6 +33,7 @@ echo "============================================================"
 # Environment Setup
 export HF_HOME="/scratch/$USER/hf_cache"
 export PYTHONPATH=".:./dllm:$PYTHONPATH"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
 
 # Load modules and activate environment
 # Adjust these paths as per your cluster setup

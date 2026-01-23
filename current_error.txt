@@ -1,24 +1,31 @@
-The following values were not passed to `accelerate launch` and had defaults used instead:
-        `--num_machines` was set to a value of `1`
-To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
-2026-01-23:13:51:11,321 INFO     [__main__.py:279] Verbosity set to INFO
-2026-01-23:13:51:29,013 INFO     [__main__.py:376] Selected Tasks: ['gsm8k']
-2026-01-23:13:51:29,032 INFO     [evaluator.py:164] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234 | Setting fews
-hot manual seed to 1234
-2026-01-23:13:51:29,032 INFO     [evaluator.py:201] Initializing mdlm model, with arguments: {'pretrained': '/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v
-1/checkpoint-6500', 'max_new_tokens': 512, 'steps': 32, 'block_size': 128, 'batch_size': 128}
+100%|██████████| 1319/1319 [00:03<00:00, 390.46it/s]
+2026-01-23:14:05:41,916 INFO     [evaluator.py:496] Running generate_until requests
+Generating answers (batched)...:   0%|          | 0/11 [00:04<?, ?it/s]
 Traceback (most recent call last):
-  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/eval.py", line 742, in <module>
+  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/eval.py", line 743, in <module>
     cli_evaluate()
   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/__main__.py", line 382, in cli_evaluate
     results = evaluator.simple_evaluate(
   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/utils.py", line 401, in _wrapper
     return fn(*args, **kwargs)
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/evaluator.py", line 204, in simple_evaluate
-    lm = lm_eval.api.registry.get_model(model).create_from_arg_string(
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/api/model.py", line 147, in create_from_arg_string
-    return cls(**args, **args2)
-TypeError: __main__.MDLMEvalHarness() got multiple values for keyword argument 'batch_size'
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/evaluator.py", line 303, in simple_evaluate
+    results = evaluate(
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/utils.py", line 401, in _wrapper
+    return fn(*args, **kwargs)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/evaluator.py", line 507, in evaluate
+    resps = getattr(lm, reqtype)(cloned_reqs)
+  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/eval.py", line 347, in generate_until
+    generated_ids = sampler.sample(
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/core/samplers/mdlm.py", line 198, in sample
+    p = F.softmax(logits, dim=-1)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/functional.py", line 1888, in softmax
+    ret = input.softmax(dim)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 73.86 GiB. GPU 0 has a total capacity of 139.81 GiB of which 63.87 GiB is free. Including non-
+PyTorch memory, this process has 75.93 GiB memory in use. Of the allocated memory 75.01 GiB is allocated by PyTorch, and 264.91 MiB is reserved by PyTorch b
+ut unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See docume
+ntation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
 Traceback (most recent call last):
   File "/scratch/biggs.s/project_envs/qwen3_dllm/bin/accelerate", line 7, in <module>
     sys.exit(main())
@@ -29,5 +36,6 @@ Traceback (most recent call last):
   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/launch.py", line 823, in simple_launcher
     raise subprocess.CalledProcessError(returncode=process.returncode, cmd=cmd)
 subprocess.CalledProcessError: Command '['/scratch/biggs.s/project_envs/qwen3_dllm/bin/python3.10', 'dllm/dllm/pipelines/a2d/eval.py', '--model', 'mdlm', '-
--tasks', 'gsm8k', '--model_args', 'pretrained=/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoint-6500,max_new_tokens=512,steps=32,block_size=128,ba
-tch_size=128', '--apply_chat_template']' returned non-zero exit status 1.
+-tasks', 'gsm8k', '--batch_size', '128', '--model_args', 'pretrained=/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoint-6500,max_new_tokens=512,ste
+ps=32,block_size=128', '--apply_chat_template']' returned non-zero exit status 1.
+(base) [biggs.s@explorer-02 AR_to_dLLM]$ 

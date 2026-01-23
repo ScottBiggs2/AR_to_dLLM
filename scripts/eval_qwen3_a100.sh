@@ -15,7 +15,7 @@ TASKS=${2:-"gsm8k"}
 LIMIT=${3:--1}  # -1 for full evaluation
 STEPS=${4:-32}  # Diffusion steps
 BLOCK_SIZE=${5:-128}
-BATCH_SIZE=${6:-128} # H200 can handle very large batches
+BATCH_SIZE=${6:-32} # Reduced from 128 to avoid OOM on large vocabs
 
 echo "Starting Evaluation for Qwen3-MDLM..."
 echo "Checkpoint: $CHECKPOINT_PATH"
@@ -28,6 +28,7 @@ echo "Batch Size: $BATCH_SIZE"
 source .env 2>/dev/null
 export HF_HOME="/scratch/$USER/hf_cache"
 export PYTHONPATH=".:./dllm:$PYTHONPATH"
+export PYTORCH_CUDA_ALLOC_CONF="expandable_segments:True"
 
 # Load modules and activate environment
 module load cuda/12.3.0
