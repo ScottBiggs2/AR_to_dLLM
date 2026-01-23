@@ -62,7 +62,8 @@ accelerate launch \
     --model mdlm \
     --tasks "$TASKS" \
     $LIMIT_ARG \
-    --model_args "pretrained=$CHECKPOINT_PATH,max_new_tokens=512,steps=$STEPS,block_size=$BLOCK_SIZE,batch_size=$BATCH_SIZE,mc_num=$MC_NUM" \
+    --batch_size "$BATCH_SIZE" \
+    --model_args "pretrained=$CHECKPOINT_PATH,max_new_tokens=512,steps=$STEPS,block_size=$BLOCK_SIZE,mc_num=$MC_NUM" \
     --apply_chat_template \
     --output_path "$RESULTS_DIR"
 

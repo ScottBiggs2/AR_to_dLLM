@@ -1,26 +1,24 @@
-2026-01-22:19:14:26,018 WARNING  [evaluator.py:406] Chat template formatting change affects loglikelihood and multiple-choice tasks. See docs/chat-template-r
-eadme.md for details.
-2026-01-22:19:14:26,034 INFO     [task.py:415] Building contexts for mmlu_pro_biology on rank 0...
+The following values were not passed to `accelerate launch` and had defaults used instead:
+        `--num_machines` was set to a value of `1`
+To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
+2026-01-23:13:51:11,321 INFO     [__main__.py:279] Verbosity set to INFO
+2026-01-23:13:51:29,013 INFO     [__main__.py:376] Selected Tasks: ['gsm8k']
+2026-01-23:13:51:29,032 INFO     [evaluator.py:164] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234 | Setting fews
+hot manual seed to 1234
+2026-01-23:13:51:29,032 INFO     [evaluator.py:201] Initializing mdlm model, with arguments: {'pretrained': '/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v
+1/checkpoint-6500', 'max_new_tokens': 512, 'steps': 32, 'block_size': 128, 'batch_size': 128}
 Traceback (most recent call last):
-  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/eval.py", line 744, in <module>
+  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/eval.py", line 742, in <module>
     cli_evaluate()
   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/__main__.py", line 382, in cli_evaluate
     results = evaluator.simple_evaluate(
   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/utils.py", line 401, in _wrapper
     return fn(*args, **kwargs)
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/evaluator.py", line 303, in simple_evaluate
-    results = evaluate(
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/utils.py", line 401, in _wrapper
-    return fn(*args, **kwargs)
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/evaluator.py", line 451, in evaluate
-    task.build_all_requests(
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/api/task.py", line 428, in build_all_requests
-    self.doc_iterator(rank=rank, limit=limit, world_size=world_size)
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/api/task.py", line 683, in doc_iterator
-    doc_iterator = utils.create_iterator(
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/utils.py", line 495, in create_iterator
-    return islice(raw_iterator, rank, limit, world_size)
-ValueError: Indices for islice() must be None or an integer: 0 <= x <= sys.maxsize.
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/evaluator.py", line 204, in simple_evaluate
+    lm = lm_eval.api.registry.get_model(model).create_from_arg_string(
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/api/model.py", line 147, in create_from_arg_string
+    return cls(**args, **args2)
+TypeError: __main__.MDLMEvalHarness() got multiple values for keyword argument 'batch_size'
 Traceback (most recent call last):
   File "/scratch/biggs.s/project_envs/qwen3_dllm/bin/accelerate", line 7, in <module>
     sys.exit(main())
@@ -30,7 +28,6 @@ Traceback (most recent call last):
     simple_launcher(args)
   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/launch.py", line 823, in simple_launcher
     raise subprocess.CalledProcessError(returncode=process.returncode, cmd=cmd)
-subprocess.CalledProcessError: Command '['/scratch/biggs.s/project_envs/qwen3_dllm/bin/python3.10', 'dllm/dllm/pipelines/a2d/eval.py', '--model', 'mdlm', '--
-tasks', 'gsm8k,minerva_math,bbh_cot_fewshot,mmlu_pro', '--limit', '-1', '--model_args', 'pretrained=/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoi
-nt-6500,max_new_tokens=512,steps=32,block_size=128', '--apply_chat_template', '--output_path', 'eval_results/checkpoint-6500_20260122_191303']' returned non-
-zero exit status 1.
+subprocess.CalledProcessError: Command '['/scratch/biggs.s/project_envs/qwen3_dllm/bin/python3.10', 'dllm/dllm/pipelines/a2d/eval.py', '--model', 'mdlm', '-
+-tasks', 'gsm8k', '--model_args', 'pretrained=/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoint-6500,max_new_tokens=512,steps=32,block_size=128,ba
+tch_size=128', '--apply_chat_template']' returned non-zero exit status 1.

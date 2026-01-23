@@ -65,22 +65,23 @@ class MDLMEvalHarness(LM):
             return []
         return []
 
-    def __init__(self, config: MDLMEvalConfig | None = None, **kwargs):
+    def __init__(self, config: MDLMEvalConfig | None = None, batch_size=None, **kwargs):
         super().__init__()
         if config is None:
             config = MDLMEvalConfig()
 
         pretrained = kwargs.get("pretrained", config.pretrained)
         dtype = kwargs.get("dtype", config.dtype)
-        batch_size = kwargs.get("batch_size", config.batch_size)
-        mc_num = kwargs.get("mc_num", config.mc_num)
+        # Handle batch_size from both kwargs (model_args) and lm-eval's direct passing
+        self.batch_size = int(batch_size or kwargs.get("batch_size", config.batch_size))
+        mc_num = int(kwargs.get("mc_num", config.mc_num))
         is_check_greedy = kwargs.get("is_check_greedy", config.is_check_greedy)
         device = kwargs.get("device", config.device)
         cfg = kwargs.get("cfg", config.cfg_scale)
-        steps = kwargs.get("steps", config.steps)
-        max_new_tokens = kwargs.get("max_new_tokens", config.max_new_tokens)
-        block_size = kwargs.get("block_size", config.block_size)
-        max_length = kwargs.get("max_length", config.max_length)
+        steps = int(kwargs.get("steps", config.steps))
+        max_new_tokens = int(kwargs.get("max_new_tokens", config.max_new_tokens))
+        block_size = int(kwargs.get("block_size", config.block_size))
+        max_length = int(kwargs.get("max_length", config.max_length))
         remasking = kwargs.get("remasking", config.remasking)
         suppress_tokens = self._parse_token_list(
             kwargs.get("suppress_tokens", config.suppress_tokens)
