@@ -3,7 +3,7 @@
 #SBATCH --partition=gpu
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --gres=gpu:a100:${GPUS:-1}
+#SBATCH --gres=gpu:a100:4
 #SBATCH --cpus-per-task=16
 #SBATCH --mem=64G
 #SBATCH --time=06:00:00
@@ -54,7 +54,7 @@ fi
 # We use --output_path to save JSON results
 # lm-eval will create a directory at output_path if it doesn't exist
 accelerate launch \
-    --num_processes ${GPUS:-1} \
+    --num_processes 4 \
     --num_machines 1 \
     --mixed_precision no \
     --dynamo_backend no \
