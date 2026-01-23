@@ -238,6 +238,16 @@ def get_tokenizer(model_args) -> transformers.PreTrainedTokenizer:
         tokenizer.add_special_tokens({"mask_token": "<|mask|>"})
         tokenizer.eot_token = "<|im_end|>" if "Qwen" in model_cls_name else "<|eot_id|>"
         tokenizer.eot_token_id = tokenizer.convert_tokens_to_ids(tokenizer.eot_token)
+        # Inject ChatML template if missing or generic
+        if not tokenizer.chat_template or "start_header_id" not in tokenizer.chat_template:
+            tokenizer.chat_template = (
+                "{% for message in messages %}"
+                "{{'<|im_start|>' + message['role'] + '\\n' + message['content'] + '<|im_end|>\\n'}}"
+                "{% endfor %}"
+                "{% if add_generation_prompt %}"
+                "{{ '<|im_start|>assistant\\n' }}"
+                "{% endif %}"
+            )
     else:
         print_main(f"no specific tokenizer customization for model_type '{model_type}' or class '{model_cls_name}'")
 

@@ -1,20 +1,64 @@
-(base) [biggs.s@explorer-02 AR_to_dLLM]$ tail -n 20 logs/eval-3913419.err
+(base) [biggs.s@explorer-01 AR_to_dLLM]$ conda activate /scratch/$USER/project_envs/qwen3_dllm
+(/scratch/biggs.s/project_envs/qwen3_dllm) [biggs.s@explorer-01 AR_to_dLLM]$ accelerate launch dllm/dllm/pipelines/a2d/eval.py \
+    --model mdlm \
+    --tasks gsm8k \
+    --limit 10 \
+    --batch_size 1 \
+    --model_args "pretrained=/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoint-6500,steps=64" \
+    --output_path diagnostic_gsm8k
 The following values were not passed to `accelerate launch` and had defaults used instead:
+        `--num_processes` was set to a value of `0`
         `--num_machines` was set to a value of `1`
+        `--mixed_precision` was set to a value of `'no'`
+        `--dynamo_backend` was set to a value of `'no'`
 To avoid this warning pass in values for each of the problematic parameters or run `accelerate config`.
-2026-01-23:14:27:51,632 INFO     [__main__.py:279] Verbosity set to INFO
-2026-01-23:14:28:03,660 INFO     [__main__.py:376] Selected Tasks: ['gsm8k']
-2026-01-23:14:28:03,675 INFO     [evaluator.py:164] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234 | Setting fews
+2026-01-23:18:39:58,896 INFO     [__main__.py:279] Verbosity set to INFO
+2026-01-23:18:40:26,263 WARNING  [__main__.py:312]  --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.
+2026-01-23:18:40:26,264 INFO     [__main__.py:376] Selected Tasks: ['gsm8k']
+2026-01-23:18:40:26,294 INFO     [evaluator.py:164] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234 | Setting fews
 hot manual seed to 1234
-2026-01-23:14:28:03,676 INFO     [evaluator.py:201] Initializing mdlm model, with arguments: {'pretrained': '/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v
-1/checkpoint-6500', 'max_new_tokens': 512, 'steps': 32, 'block_size': 128}
+2026-01-23:18:40:26,294 INFO     [evaluator.py:201] Initializing mdlm model, with arguments: {'pretrained': '/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v
+1/checkpoint-6500', 'steps': 64}
 `torch_dtype` is deprecated! Use `dtype` instead!
 `torch_dtype` is deprecated! Use `dtype` instead!
-2026-01-23:14:28:13,368 WARNING  [evaluator.py:406] Chat template formatting change affects loglikelihood and multiple-choice tasks. See docs/chat-template-
-readme.md for details.
-2026-01-23:14:28:13,369 INFO     [task.py:415] Building contexts for gsm8k on rank 0...
-100%|██████████| 1319/1319 [00:03<00:00, 399.07it/s]
-2026-01-23:14:28:16,691 INFO     [evaluator.py:496] Running generate_until requests
-Generating answers (batched)...: 100%|██████████| 42/42 [13:50<00:00, 19.78s/it]
-2026-01-23:14:42:13,223 INFO     [evaluation_tracker.py:269] Output path not provided, skipping saving results aggregated
-(base) [biggs.s@explorer-02 AR_to_dLLM]$ 
+Traceback (most recent call last):
+  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/eval.py", line 743, in <module>
+    cli_evaluate()
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/__main__.py", line 382, in cli_evaluate
+    results = evaluator.simple_evaluate(
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/utils.py", line 401, in _wrapper
+    return fn(*args, **kwargs)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/evaluator.py", line 204, in simple_evaluate
+    lm = lm_eval.api.registry.get_model(model).create_from_arg_string(
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/api/model.py", line 147, in create_from_arg_string
+    return cls(**args, **args2)
+  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/eval.py", line 112, in __init__
+    self.model = self.model.to(device)
+File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/modeling_utils.py", line 4347, in to
+    return super().to(*args, **kwargs)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1174, in to
+    return self._apply(convert)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 780, in _apply
+    module._apply(fn)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 780, in _apply
+    module._apply(fn)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 805, in _apply
+    param_applied = fn(param)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1160, in convert
+    return t.to(
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/cuda/__init__.py", line 314, in _lazy_init
+    torch._C._cuda_init()
+RuntimeError: Found no NVIDIA driver on your system. Please check that you have an NVIDIA GPU and installed a driver from http://www.nvidia.com/Download/ind
+ex.aspx
+Traceback (most recent call last):
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/bin/accelerate", line 7, in <module>
+    sys.exit(main())
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/accelerate_cli.py", line 50, in main
+    args.func(args)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/launch.py", line 1235, in launch_command
+    simple_launcher(args)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/launch.py", line 823, in simple_launcher
+    raise subprocess.CalledProcessError(returncode=process.returncode, cmd=cmd)
+subprocess.CalledProcessError: Command '['/scratch/biggs.s/project_envs/qwen3_dllm/bin/python3.10', 'dllm/dllm/pipelines/a2d/eval.py', '--model', 'mdlm', '-
+-tasks', 'gsm8k', '--limit', '10', '--batch_size', '1', '--model_args', 'pretrained=/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoint-6500,steps=6
+4', '--output_path', 'diagnostic_gsm8k']' returned non-zero exit status 1.
