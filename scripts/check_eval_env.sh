@@ -34,7 +34,7 @@ def get_ver(pkg):
 print(f'torch:        {torch.__version__}')
 print(f'transformers: {transformers.__version__}')
 print(f'accelerate:   {accelerate.__version__}')
-print(f'lm-eval:      {get_ver(\"lm_eval\")}')
+print(f'lm-eval:      {get_ver(\"lm_eval\")} (should be >= 0.4.7)')
 print(f'evaluate:     {get_ver(\"evaluate\")}')
 print('SUCCESS: All core imports working.')
 " || { echo "ERROR: One or more core packages missing or failing to import."; exit 1; }

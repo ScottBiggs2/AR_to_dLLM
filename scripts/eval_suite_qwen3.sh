@@ -39,6 +39,12 @@ conda activate /scratch/$USER/project_envs/qwen3_dllm 2>/dev/null || echo "Warni
 RESULTS_DIR="eval_results/$(basename $CHECKPOINT_PATH)_$(date +%Y%m%d_%H%M%S)"
 mkdir -p "$RESULTS_DIR"
 
+# Handle optional limit
+LIMIT_ARG=""
+if [ "$LIMIT" != "-1" ] && [ -n "$LIMIT" ]; then
+    LIMIT_ARG="--limit $LIMIT"
+fi
+
 # Launch evaluation
 # We use --output_path to save JSON results
 # lm-eval will create a directory at output_path if it doesn't exist
@@ -50,7 +56,7 @@ accelerate launch \
     dllm/dllm/pipelines/a2d/eval.py \
     --model mdlm \
     --tasks "$TASKS" \
-    --limit "$LIMIT" \
+    $LIMIT_ARG \
     --model_args "pretrained=$CHECKPOINT_PATH,max_new_tokens=512,steps=$STEPS,block_size=$BLOCK_SIZE" \
     --apply_chat_template \
     --output_path "$RESULTS_DIR"
