@@ -35,6 +35,10 @@ module load cuda/12.3.0
 source "$HOME/miniconda/etc/profile.d/conda.sh"
 conda activate /scratch/$USER/project_envs/qwen3_dllm
 
+# Results Directory
+RESULTS_DIR="eval_results/$(basename $CHECKPOINT_PATH)_$(date +%Y%m%d_%H%M%S)"
+mkdir -p "$RESULTS_DIR"
+
 # Handle optional limit
 LIMIT_ARG=""
 if [ "$LIMIT" != "-1" ] && [ -n "$LIMIT" ]; then
@@ -52,6 +56,7 @@ accelerate launch \
     $LIMIT_ARG \
     --batch_size "$BATCH_SIZE" \
     --model_args "pretrained=$CHECKPOINT_PATH,max_new_tokens=512,steps=$STEPS,block_size=$BLOCK_SIZE" \
-    --apply_chat_template
+    --apply_chat_template \
+    --output_path "$RESULTS_DIR"
 
-echo "Evaluation finished."
+echo "Evaluation finished. Results saved to $RESULTS_DIR"
