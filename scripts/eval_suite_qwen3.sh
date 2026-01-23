@@ -2,10 +2,11 @@
 #SBATCH --job-name=eval-suite-qwen3
 #SBATCH --partition=gpu
 #SBATCH --nodes=1
-#SBATCH --gres=gpu:a100:1
-#SBATCH --cpus-per-task=8
+#SBATCH --ntasks-per-node=1
+#SBATCH --gres=gpu:a100:${GPUS:-1}
+#SBATCH --cpus-per-task=16
 #SBATCH --mem=64G
-#SBATCH --time=04:00:00
+#SBATCH --time=06:00:00
 #SBATCH --output=logs/eval-suite-%j.out
 #SBATCH --error=logs/eval-suite-%j.err
 
@@ -15,6 +16,8 @@ TASKS=${2:-"gsm8k,minerva_math,bbh_cot_fewshot,mmlu_pro"}
 LIMIT=${3:--1}  # -1 for full evaluation
 STEPS=${4:-32}  # Diffusion steps
 BLOCK_SIZE=${5:-128}
+BATCH_SIZE=${6:-32} # Match MC_NUM for safer likelihood estimation
+MC_NUM=${7:-32}     # 32 is a good balance for speed
 
 echo "============================================================"
 echo "Starting Evaluation Suite for Qwen3-MDLM..."
@@ -23,6 +26,8 @@ echo "Tasks: $TASKS"
 echo "Limit: $LIMIT"
 echo "Steps: $STEPS"
 echo "Block Size: $BLOCK_SIZE"
+echo "Batch Size: $BATCH_SIZE"
+echo "MC Samples: $MC_NUM"
 echo "============================================================"
 
 # Environment Setup
@@ -49,7 +54,7 @@ fi
 # We use --output_path to save JSON results
 # lm-eval will create a directory at output_path if it doesn't exist
 accelerate launch \
-    --num_processes 1 \
+    --num_processes ${GPUS:-1} \
     --num_machines 1 \
     --mixed_precision no \
     --dynamo_backend no \
@@ -57,7 +62,7 @@ accelerate launch \
     --model mdlm \
     --tasks "$TASKS" \
     $LIMIT_ARG \
-    --model_args "pretrained=$CHECKPOINT_PATH,max_new_tokens=512,steps=$STEPS,block_size=$BLOCK_SIZE" \
+    --model_args "pretrained=$CHECKPOINT_PATH,max_new_tokens=512,steps=$STEPS,block_size=$BLOCK_SIZE,batch_size=$BATCH_SIZE,mc_num=$MC_NUM" \
     --apply_chat_template \
     --output_path "$RESULTS_DIR"
 

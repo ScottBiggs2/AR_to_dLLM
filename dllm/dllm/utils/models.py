@@ -177,16 +177,15 @@ def get_tokenizer(model_args) -> transformers.PreTrainedTokenizer:
     if not tokenizer.bos_token:
         tokenizer.bos_token = tokenizer.pad_token
 
-    # If model is not provided, return as-is
-    model_cfg = transformers.AutoConfig.from_pretrained(model_name_or_path)
-    model_cls = transformers.AutoModel._model_mapping[type(model_cfg)]
-
     # ---------------- Model-specific customization ----------------
-    if issubclass(model_cls, LLaDAModelLM):
+    # Use config's model_type or class name to determine customization
+    model_cfg = transformers.AutoConfig.from_pretrained(model_name_or_path)
+    model_type = getattr(model_cfg, "model_type", "")
+    model_cls_name = type(model_cfg).__name__
+
+    if "LLaDA" in model_cls_name or "llada" in model_type:
         tokenizer.add_special_tokens({"mask_token": "<|mdm_mask|>"})
         tokenizer.eot_token = "<|eot_id|>"
-        # tokenizer.eot_token_id = tokenizer.convert_tokens_to_ids(tokenizer.eot_token) # can not do this for llada base directly
-        # TODO: for llada base, add special_tokens = {"<|start_header_id|>": 126346, "<|end_header_id|>": 126347, "<|eot_id|>": 126348}
         # fix bugs in chat template
         tokenizer.chat_template = """\
 {% set loop_messages = messages %}
@@ -201,17 +200,10 @@ def get_tokenizer(model_args) -> transformers.PreTrainedTokenizer:
 
 {% endif %}
 """
-    elif issubclass(model_cls, (LLaDAMoEModelLM, LLaDA2MoeModelLM)):
-        tokenizer.add_special_tokens({"mask_token": "<|mask|>"})
-        tokenizer.eot_token = "<|role_end|>"
-        tokenizer.eot_token_id = tokenizer.convert_tokens_to_ids(tokenizer.eot_token)
-    elif issubclass(model_cls, DreamModel):
+    elif "Dream" in model_cls_name or "dream" in model_type:
         tokenizer.eot_token = "<|im_end|>"
         tokenizer.eot_token_id = tokenizer.convert_tokens_to_ids(tokenizer.eot_token)
-    elif issubclass(
-        model_cls,
-        (BertPreTrainedModel, RobertaPreTrainedModel, ModernBertPreTrainedModel),
-    ):
+    elif any(x in model_cls_name for x in ["Bert", "Roberta"]):
         tokenizer.add_special_tokens({"mask_token": "[MASK]"})
         tokenizer.eot_token = "[/Answer]"
         tokenizer.chat_template = """\
@@ -241,16 +233,13 @@ def get_tokenizer(model_args) -> transformers.PreTrainedTokenizer:
 [Answer]
 {% endif %}
 """
-    elif issubclass(model_cls, A2DLlamaLMHeadModel):
+    elif any(x in model_cls_name for x in ["Qwen3", "Qwen2", "Llama", "A2D"]):
+        # Universal A2D/MDLM mask token
         tokenizer.add_special_tokens({"mask_token": "<|mask|>"})
-        tokenizer.eot_token = "<|eot_id|>"
-        tokenizer.eot_token_id = tokenizer.convert_tokens_to_ids(tokenizer.eot_token)
-    elif issubclass(model_cls, (A2DQwen2LMHeadModel, A2DQwen3LMHeadModel)):
-        tokenizer.add_special_tokens({"mask_token": "<|mask|>"})
-        tokenizer.eot_token = "<|im_end|>"
+        tokenizer.eot_token = "<|im_end|>" if "Qwen" in model_cls_name else "<|eot_id|>"
         tokenizer.eot_token_id = tokenizer.convert_tokens_to_ids(tokenizer.eot_token)
     else:
-        print_main("no tokenizer customization for model class:", model_cls)
+        print_main(f"no specific tokenizer customization for model_type '{model_type}' or class '{model_cls_name}'")
 
     # Global fallback: ensure mask_token is always present for diffusion models
     if tokenizer.mask_token is None:

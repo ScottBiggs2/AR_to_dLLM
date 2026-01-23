@@ -215,7 +215,8 @@ class MDLMEvalHarness(LM):
         prompt_index = torch.arange(seq.shape[1], device=self.device) < len(prefix)
 
         loss_acc = []
-        for _ in range(self.mc_num // self.batch_size):
+        num_loops = max(1, self.mc_num // self.batch_size)
+        for _ in range(num_loops):
             perturbed_seq, p_mask = self._forward_process(seq, prompt_index)
 
             mask_indices = perturbed_seq == self.mask_id
@@ -331,16 +332,19 @@ class MDLMEvalHarness(LM):
     def generate_until(self, requests: list[Instance]):
         out = []
         sampler = MDLMSampler(model=self.model, tokenizer=self.tokenizer)
-        for instance in tqdm(requests, desc="Generating..."):
-            context, gen_kwargs = instance.args
-            prompt_ids = torch.tensor(
-                self.tokenizer(context)["input_ids"],
-                device=self.device, dtype=torch.long
-            )
-            prompt = [prompt_ids]
-            stop_tokens = gen_kwargs["until"]
+        
+        for i in tqdm(range(0, len(requests), self.batch_size), desc="Generating answers (batched)..."):
+            batch = requests[i : i + self.batch_size]
+            contexts = [inst.args[0] for inst in batch]
+            gen_kwargs_list = [inst.args[1] for inst in batch]
+            
+            prompt_ids_list = [
+                torch.tensor(self.tokenizer(ctx)["input_ids"], device=self.device, dtype=torch.long)
+                for ctx in contexts
+            ]
+            
             generated_ids = sampler.sample(
-                inputs=prompt,
+                inputs=prompt_ids_list,
                 steps=self.steps,
                 max_new_tokens=self.max_new_tokens,
                 block_size=self.block_size,
@@ -351,16 +355,20 @@ class MDLMEvalHarness(LM):
                 begin_suppress_tokens=self.begin_suppress_tokens,
                 right_shift_logits=self.right_shift_logits,
             )
-            generated_answer = self.tokenizer.decode(
-                generated_ids[0][prompt[0].shape[0]:], skip_special_tokens=False
-            )
-            for stop_seq in stop_tokens:
-                if stop_seq in generated_answer:
-                    generated_answer = generated_answer.split(stop_seq)[0]
-            generated_answer_ids = self.tokenizer(generated_answer)["input_ids"]
-            generated_answer = self.tokenizer.decode(generated_answer_ids, skip_special_tokens=True)
-            out.append(generated_answer)
-            if self.accelerator is not None: self.accelerator.wait_for_everyone()
+            
+            for gen_ids, prompt_ids, gen_kwargs in zip(generated_ids, prompt_ids_list, gen_kwargs_list):
+                generated_answer = self.tokenizer.decode(
+                    gen_ids[prompt_ids.shape[0] :], skip_special_tokens=False
+                )
+                stop_tokens = gen_kwargs["until"]
+                for stop_seq in stop_tokens:
+                    if stop_seq in generated_answer:
+                        generated_answer = generated_answer.split(stop_seq)[0]
+                
+                generated_answer_ids = self.tokenizer(generated_answer)["input_ids"]
+                generated_answer = self.tokenizer.decode(generated_answer_ids, skip_special_tokens=True)
+                out.append(generated_answer)
+                
         return out
 
 
@@ -566,7 +574,8 @@ class BD3LMEvalHarness(LM):
         prompt_index = torch.arange(seq.shape[1], device=self.device) < len(prefix)
 
         loss_acc = []
-        for _ in range(self.mc_num // self.batch_size):
+        num_loops = max(1, self.mc_num // self.batch_size)
+        for _ in range(num_loops):
             perturbed_seq, p_mask = self._forward_process(seq, prompt_index)
 
             mask_indices = perturbed_seq == self.mask_id
@@ -680,33 +689,21 @@ class BD3LMEvalHarness(LM):
         raise NotImplementedError
 
     def generate_until(self, requests: list[Instance]):
-        """Generate greedily until a stopping sequence
-
-        :param requests: list[Instance]
-            A list of Instance objects with property `args` which returns a tuple (context, gen_kwargs).
-            context: str
-                Context string
-            gen_kwargs: dict
-                A dictionary of keyword arguments to pass to the generation function e.g. top_k, until, etc.
-        :return: list[str]
-            A list of model generated continuations.
-            continuation: str
-                The generated continuation.
-        """
         out = []
         sampler = BD3LMSampler(model=self.model, tokenizer=self.tokenizer)
 
-        for instance in tqdm(requests, desc="Generating..."):
-            context, gen_kwargs = instance.args  # type: ignore
-            prompt_ids = torch.tensor(
-                self.tokenizer(context)["input_ids"],
-                device=self.device,
-                dtype=torch.long,
-            )
-            prompt = [prompt_ids]
-            stop_tokens = gen_kwargs["until"]
+        for i in tqdm(range(0, len(requests), self.batch_size), desc="Generating answers (batched)..."):
+            batch = requests[i : i + self.batch_size]
+            contexts = [inst.args[0] for inst in batch]
+            gen_kwargs_list = [inst.args[1] for inst in batch]
+
+            prompt_ids_list = [
+                torch.tensor(self.tokenizer(ctx)["input_ids"], device=self.device, dtype=torch.long)
+                for ctx in contexts
+            ]
+
             generated_ids = sampler.sample(
-                inputs=prompt,
+                inputs=prompt_ids_list,
                 steps=self.steps,
                 max_new_tokens=self.max_new_tokens,
                 block_size=self.block_size,
@@ -715,21 +712,22 @@ class BD3LMEvalHarness(LM):
                 remasking=self.remasking,
                 right_shift_logits=self.right_shift_logits,
             )
-            generated_answer = self.tokenizer.decode(
-                generated_ids[0][prompt[0].shape[0] :], skip_special_tokens=False
-            )
-            for stop_seq in stop_tokens:
-                if stop_seq in generated_answer:
-                    generated_answer = generated_answer.split(stop_seq)[0]
 
-            # remove special tokens
-            generated_answer_ids = self.tokenizer(generated_answer)["input_ids"]
-            generated_answer = self.tokenizer.decode(
-                generated_answer_ids, skip_special_tokens=True
-            )
-            out.append(generated_answer)
-            if self.accelerator is not None:
-                self.accelerator.wait_for_everyone()
+            for gen_ids, prompt_ids, gen_kwargs in zip(generated_ids, prompt_ids_list, gen_kwargs_list):
+                generated_answer = self.tokenizer.decode(
+                    gen_ids[prompt_ids.shape[0] :], skip_special_tokens=False
+                )
+                stop_tokens = gen_kwargs["until"]
+                for stop_seq in stop_tokens:
+                    if stop_seq in generated_answer:
+                        generated_answer = generated_answer.split(stop_seq)[0]
+
+                # remove special tokens
+                generated_answer_ids = self.tokenizer(generated_answer)["input_ids"]
+                generated_answer = self.tokenizer.decode(
+                    generated_answer_ids, skip_special_tokens=True
+                )
+                out.append(generated_answer)
 
         return out
 
