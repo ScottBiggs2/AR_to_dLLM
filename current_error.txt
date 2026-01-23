@@ -1,4 +1,41 @@
+2026-01-22:19:02:47,944 INFO     [__main__.py:279] Verbosity set to INFO
+2026-01-22:19:03:10,816 WARNING  [__main__.py:312]  --limit SHOULD ONLY BE USED FOR TESTING.REAL METRICS SHOULD NOT BE COMPUTED USING LIMIT.
+2026-01-22:19:03:10,818 INFO     [__main__.py:376] Selected Tasks: ['bbh_cot_fewshot', 'gsm8k', 'minerva_math', 'mmlu_pro']
+2026-01-22:19:03:10,858 INFO     [evaluator.py:164] Setting random seed to 0 | Setting numpy seed to 1234 | Setting torch manual seed to 1234 | Setting fewsh
+ot manual seed to 1234
+2026-01-22:19:03:10,858 INFO     [evaluator.py:201] Initializing mdlm model, with arguments: {'pretrained': '/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1
 /checkpoint-6500', 'max_new_tokens': 512, 'steps': 32, 'block_size': 128}
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 1380.16 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 11007.86 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 12239.28 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 6999.23 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 19361.07 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 11368.03 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 20226.77 examples/s]
+Generating test split: 100%|██████████| 178/178 [00:00<00:00, 14850.34 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 5509.69 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 14304.88 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 4643.66 examples/s]
+Generating test split: 100%|██████████| 146/146 [00:00<00:00, 10181.87 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 21191.06 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 9884.30 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 10125.69 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 14040.36 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 13750.91 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 12379.88 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 8591.29 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 4536.13 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 6706.64 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 17472.48 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 20972.36 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 6561.19 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 6999.14 examples/s]
+Generating test split: 100%|██████████| 187/187 [00:00<00:00, 9366.31 examples/s]
+Generating test split: 100%|██████████| 250/250 [00:00<00:00, 8003.72 examples/s]
+Generating train split: 100%|██████████| 7473/7473 [00:00<00:00, 130334.58 examples/s]
+Generating test split: 100%|██████████| 1319/1319 [00:00<00:00, 40534.62 examples/s]
 Traceback (most recent call last):
   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/eval.py", line 744, in <module>
     cli_evaluate()
@@ -6,24 +43,21 @@ Traceback (most recent call last):
     results = evaluator.simple_evaluate(
   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/utils.py", line 397, in _wrapper
     return fn(*args, **kwargs)
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/evaluator.py", line 204, in simple_evaluate
-    lm = lm_eval.api.registry.get_model(model).create_from_arg_string(
-  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/api/model.py", line 147, in create_from_arg_string
-    return cls(**args, **args2)
-  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/eval.py", line 101, in __init__
-    self.model = dllm.utils.get_model(
-  File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/utils/models.py", line 84, in get_model
-    raise ValueError(f"Could not load model from {model_name_or_path}. Underlying errors:\n{error_msg}")
-ValueError: Could not load model from /scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoint-6500. Underlying errors:
-AutoModelForMaskedLM: Unrecognized configuration class <class 'transformers.models.qwen3.configuration_qwen3.Qwen3Config'> for this kind of AutoModel: AutoMo
-delForMaskedLM.
-Model type should be one of AlbertConfig, BartConfig, BertConfig, BigBirdConfig, CamembertConfig, ConvBertConfig, Data2VecTextConfig, DebertaConfig, DebertaV
-2Config, DistilBertConfig, ElectraConfig, ErnieConfig, EsmConfig, FlaubertConfig, FNetConfig, FunnelConfig, IBertConfig, LayoutLMConfig, LongformerConfig, Lu
-keConfig, MBartConfig, MegaConfig, MegatronBertConfig, MobileBertConfig, ModernBertConfig, MPNetConfig, MraConfig, MvpConfig, NezhaConfig, NystromformerConfi
-g, PerceiverConfig, QDQBertConfig, ReformerConfig, RemBertConfig, RobertaConfig, RobertaPreLayerNormConfig, RoCBertConfig, RoFormerConfig, SqueezeBertConfig,
- TapasConfig, Wav2Vec2Config, XLMConfig, XLMRobertaConfig, XLMRobertaXLConfig, XmodConfig, YosoConfig, A2DQwen3Config.
-AutoModelForCausalLM: 'str' object has no attribute 'is_floating_point'
-AutoModel: 'str' object has no attribute 'is_floating_point'
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/evaluator.py", line 235, in simple_evaluate
+    task_dict = get_task_dict(tasks, task_manager)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/tasks/__init__.py", line 618, in get_task_dict
+    task_name_from_string_dict = task_manager.load_task_or_group(
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/tasks/__init__.py", line 414, in load_task_or_group
+    collections.ChainMap(*map(self._load_individual_task_or_group, task_list))
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/tasks/__init__.py", line 398, in _load_individual_task_or_group
+    group_name: dict(collections.ChainMap(*map(fn, reversed(subtask_list))))
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/tasks/__init__.py", line 314, in _load_individual_task_or_group
+    return _load_task(task_config, task=name_or_config)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/tasks/__init__.py", line 280, in _load_task
+    task_object = ConfigurableTask(config=config)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/lm_eval/api/task.py", line 708, in __init__
+    self._config = TaskConfig(**config)
+TypeError: TaskConfig.__init__() got an unexpected keyword argument 'group'
 Traceback (most recent call last):
   File "/scratch/biggs.s/project_envs/qwen3_dllm/bin/accelerate", line 7, in <module>
     sys.exit(main())
@@ -35,6 +69,5 @@ Traceback (most recent call last):
     raise subprocess.CalledProcessError(returncode=process.returncode, cmd=cmd)
 subprocess.CalledProcessError: Command '['/scratch/biggs.s/project_envs/qwen3_dllm/bin/python3.10', 'dllm/dllm/pipelines/a2d/eval.py', '--model', 'mdlm', '--
 tasks', 'gsm8k,minerva_math,bbh_cot_fewshot,mmlu_pro', '--limit', '-1', '--model_args', 'pretrained=/scratch/biggs.s/outputs/qwen3-mdlm-tulu3-sft-v1/checkpoi
-nt-6500,max_new_tokens=512,steps=32,block_size=128', '--apply_chat_template', '--output_path', 'eval_results/checkpoint-6500_20260122_184954']' returned non-
+nt-6500,max_new_tokens=512,steps=32,block_size=128', '--apply_chat_template', '--output_path', 'eval_results/checkpoint-6500_20260122_190201']' returned non-
 zero exit status 1.
-(/scratch/biggs.s/project_envs/qwen3_dllm) [biggs.s@explorer-02 AR_to_dLLM]$ 

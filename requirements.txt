@@ -30,7 +30,7 @@ python-dotenv
 -e ./dllm
 
 # === Evaluation Suite ===
-lm-eval==0.4.5
+lm-eval==0.4.7
 evaluate>=0.4.0
 sqlitedict
 pytablewriter

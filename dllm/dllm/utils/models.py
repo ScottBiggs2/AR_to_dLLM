@@ -45,8 +45,14 @@ def get_model(
             bnb_4bit_quant_type="nf4",
         )
 
+    # Convert string dtype to torch.dtype
+    if isinstance(dtype, str) and dtype != "auto":
+        torch_dtype = getattr(torch, dtype) if hasattr(torch, dtype) else torch.bfloat16
+    else:
+        torch_dtype = dtype
+
     params = {
-        "torch_dtype": dtype,
+        "torch_dtype": torch_dtype,
         "device_map": device_map,
         "quantization_config": quant_config,
         "attn_implementation": attn_implementation,
