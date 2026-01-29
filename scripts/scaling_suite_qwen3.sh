@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=qwen3-scaling
 #SBATCH --reservation=biggs.s_test
-# #SBATCH --partition=multigpu
+#SBATCH --partition=reservation
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:8
 #SBATCH --time=18:00:00
