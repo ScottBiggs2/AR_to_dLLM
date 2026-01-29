@@ -1,9 +1,9 @@
 #!/bin/bash
 #SBATCH --job-name=qwen3-scaling
 #SBATCH --reservation=biggs.s_test
-#SBATCH --partition=reservation
+# #SBATCH --partition=multigpu
 #SBATCH --nodes=1
-#SBATCH --gres=gpu:8
+#SBATCH --gres=gpu:4
 #SBATCH --time=18:00:00
 #SBATCH --exclusive
 #SBATCH --output=logs/scaling-%j.out
@@ -35,7 +35,7 @@ echo "Node: $SLURMD_NODENAME"
 echo "Project: $WANDB_PROJECT"
 
 # Loop through GPU configurations
-for NUM_GPUS in 1 2 4 8; do
+for NUM_GPUS in 1 2 4; do
     RUN_NAME="qwen3-scaling-${NUM_GPUS}gpu"
     OUTPUT_DIR="${COMMON_OUTPUT_DIR}/${RUN_NAME}"
     
