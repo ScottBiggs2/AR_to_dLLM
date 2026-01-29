@@ -26,6 +26,7 @@ export WANDB_PROJECT=$WANDB_PROJECT
 mkdir -p "$HF_HOME" "$TRITON_CACHE_DIR" "$COMMON_OUTPUT_DIR"
 
 # Activate environment
+module load cuda/12.3.0
 source "$HOME/miniconda/etc/profile.d/conda.sh"
 conda activate /scratch/$USER/project_envs/qwen3_dllm
 

@@ -1,40 +1,38 @@
- available: True\n\nCPU:\nArchitecture:                       x86_64\nCPU op-mode(s):                     32-bit, 64-bit\nAddress sizes:                    
-  46 bits physical, 57 bits virtual\nByte Order:                         Little Endian\nCPU(s):                             128\nOn-line CPU(s) list:       
-         0-127\nVendor ID:                          GenuineIntel\nModel name:                         INTEL(R) XEON(R) GOLD 6548Y+\nCPU family:             
-            6\nModel:                              207\nThread(s) per core:                 2\nCore(s) per socket:                 32\nSocket(s):           
-               2\nStepping:                           2\nBogoMIPS:                           5000.00\nFlags:                              fpu vme de pse tsc
- msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx pdpe1gb rdtscp lm constant_tsc art arch_per
-fmon pebs bts rep_good nopl xtopology nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 sdbg fma cx16 xt
-pr pdcm pcid dca sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand lahf_lm abm 3dnowprefetch cpuid_fault epb cat_l3 cat_l2 cdp_
-l3 invpcid_single cdp_l2 ssbd mba ibrs ibpb stibp ibrs_enhanced tpr_shadow flexpriority ept vpid ept_ad fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid
- cqm rdt_a avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb intel_pt avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves cqm_llc cqm
-_occup_llc cqm_mbm_total cqm_mbm_local split_lock_detect avx_vnni avx512_bf16 wbnoinvd dtherm ida arat pln pts hfi vnmi avx512vbmi umip pku ospke waitpkg av
-x512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg tme avx512_vpopcntdq la57 rdpid bus_lock_detect cldemote movdiri movdir64b enqcmd fsrm md_clear se
-rialize tsxldtrk pconfig arch_lbr ibt amx_bf16 avx512_fp16 amx_tile amx_int8 flush_l1d arch_capabilities\nVirtualization:                     VT-x\nL1d cach
-e:                          3 MiB (64 instances)\nL1i cache:                          2 MiB (64 instances)\nL2 cache:                           128 MiB (64 
-instances)\nL3 cache:                           120 MiB (2 instances)\nNUMA node(s):                       2\nNUMA node0 CPU(s):                  0,2,4,6,8,
-10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100,102,104,106,108,1
-10,112,114,116,118,120,122,124,126\nNUMA node1 CPU(s):                  1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49,51,53,55,57,59
-,61,63,65,67,69,71,73,75,77,79,81,83,85,87,89,91,93,95,97,99,101,103,105,107,109,111,113,115,117,119,121,123,125,127\nVulnerability Gather data sampling: No
-t affected\nVulnerability Itlb multihit:        Not affected\nVulnerability L1tf:                 Not affected\nVulnerability Mds:                  Not affe
-cted\nVulnerability Meltdown:             Not affected\nVulnerability Mmio stale data:      Not affected\nVulnerability Retbleed:             Not affected\n
-Vulnerability Spec rstack overflow: Not affected\nVulnerability Spec store bypass:    Mitigation; Speculative Store Bypass disabled via prctl\nVulnerability
- Spectre v1:           Mitigation; usercopy/swapgs barriers and __user pointer sanitization\nVulnerability Spectre v2:           Mitigation; Enhanced / Auto
-matic IBRS, IBPB conditional, RSB filling, PBRSB-eIBRS SW sequence\nVulnerability Srbds:                Not affected\nVulnerability Tsx async abort:      No
-t affected\n\nVersions of relevant libraries:\n[pip3] numpy==2.2.6\n[pip3] torch==2.4.1+cu121\n[pip3] torchaudio==2.4.1+cu121\n[pip3] torchmetrics==1.8.2\n[
-pip3] torchvision==0.19.1+cu121\n[pip3] triton==3.0.0\n[conda] numpy                       2.2.6            pypi_0           pypi\n[conda] torch            
-           2.4.1+cu121      pypi_0           pypi\n[conda] torchaudio                  2.4.1+cu121      pypi_0           pypi\n[conda] torchmetrics         
-       1.8.2            pypi_0           pypi\n[conda] torchvision                 0.19.1+cu121     pypi_0           pypi\n[conda] triton                   
-   3.0.0            pypi_0           pypi",
-  "transformers_version": "4.57.0",
-  "upper_git_hash": null,
-  "tokenizer_pad_token": [
-    "<|endoftext|>",
-    "151643"
-  ],
-  "tokenizer_eos_token": [
-    "<|im_end|>",
-    "151645"
-  ],
-  "tokenizer_bos_token": [
-    "<|endoftext|>",
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/accelerate_cli.py", line 50, in main
+    args.func(args)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/launch.py", line 1220, in launch_command
+    deepspeed_launcher(args)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/launch.py", line 869, in deepspeed_launcher
+    from deepspeed.launcher.runner import DEEPSPEED_ENVIRONMENT_NAME
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/__init__.py", line 25, in <module>
+    from . import ops
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/ops/__init__.py", line 15, in <module>
+    from ..git_version_info import compatible_ops as __compatible_ops__
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/git_version_info.py", line 29, in <module>
+    op_compatible = builder.is_compatible()
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/ops/op_builder/fp_quantizer.py", line 35, in is_compatible
+    sys_cuda_major, _ = installed_cuda_version()
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/ops/op_builder/builder.py", line 51, in installed_cuda_version
+    raise MissingCUDAException("CUDA_HOME does not exist, unable to compile CUDA op(s)")
+deepspeed.ops.op_builder.builder.MissingCUDAException: CUDA_HOME does not exist, unable to compile CUDA op(s)
+Traceback (most recent call last):
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/bin/accelerate", line 7, in <module>
+    sys.exit(main())
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/accelerate_cli.py", line 50, in main
+    args.func(args)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/launch.py", line 1220, in launch_command
+    deepspeed_launcher(args)
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/accelerate/commands/launch.py", line 869, in deepspeed_launcher
+    from deepspeed.launcher.runner import DEEPSPEED_ENVIRONMENT_NAME
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/__init__.py", line 25, in <module>
+    from . import ops
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/ops/__init__.py", line 15, in <module>
+    from ..git_version_info import compatible_ops as __compatible_ops__
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/git_version_info.py", line 29, in <module>
+    op_compatible = builder.is_compatible()
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/ops/op_builder/fp_quantizer.py", line 35, in is_compatible
+    sys_cuda_major, _ = installed_cuda_version()
+  File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/ops/op_builder/builder.py", line 51, in installed_cuda_version
+    raise MissingCUDAException("CUDA_HOME does not exist, unable to compile CUDA op(s)")
+deepspeed.ops.op_builder.builder.MissingCUDAException: CUDA_HOME does not exist, unable to compile CUDA op(s)
+(base) [biggs.s@explorer-01 AR_to_dLLM]$ 
