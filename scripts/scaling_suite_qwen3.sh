@@ -36,7 +36,8 @@ echo "Node: $SLURMD_NODENAME"
 echo "Project: $WANDB_PROJECT"
 
 # Loop through GPU configurations
-for NUM_GPUS in 1 2 4; do
+# for NUM_GPUS in 1, 2 4; do 
+for NUM_GPUS in 2 4; do 
     RUN_NAME="qwen3-scaling-${NUM_GPUS}gpu"
     OUTPUT_DIR="${COMMON_OUTPUT_DIR}/${RUN_NAME}"
     
