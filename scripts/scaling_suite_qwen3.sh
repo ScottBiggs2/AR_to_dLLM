@@ -46,6 +46,16 @@ for NUM_GPUS in 2 4; do
     echo "Run Name: ${RUN_NAME}"
     echo "=================================================="
     
+    # Strong Scaling: Keep global batch size constant at 32
+    # Global BS = Per_Device (8) * Num_GPUs * Grad_Acc
+    # 32 = 8 * NUM_GPUS * GRAD_ACC
+    # GRAD_ACC = 4 / NUM_GPUS
+    
+    GRAD_ACC=$((4 / NUM_GPUS))
+    
+    echo "Global Batch Size: 32"
+    echo "Gradient Accumulation Steps: $GRAD_ACC"
+
     # Run training
     # We explicitly set --num_processes to control the number of GPUs used by accelerate
     accelerate launch \
@@ -63,7 +73,7 @@ for NUM_GPUS in 2 4; do
         --save_strategy "no" \
         --eval_strategy "no" \
         --per_device_train_batch_size 8 \
-        --gradient_accumulation_steps 4 \
+        --gradient_accumulation_steps $GRAD_ACC \
         --learning_rate 2e-5 \
         --warmup_ratio 0.1 \
         --overwrite_output_dir

@@ -60,6 +60,10 @@ class MDLMTrainer(transformers.Trainer):
         )
         self.add_callback(self.meter)
         
+        # Add throughput logging
+        from scripts.callbacks import ThroughputCallback
+        self.add_callback(ThroughputCallback())
+        
         self.masking_curriculum = None
         if args.masking_strategy == "curriculum":
             self.masking_curriculum = MaskingCurriculum(total_steps=args.curriculum_total_steps)

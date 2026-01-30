@@ -77,11 +77,55 @@ class TimeoutCheckpointCallback(transformers.TrainerCallback):
             # control.should_training_stop = True # Optional: stop if we want to rely on requeueing 
             # ideally we just save and let it continue until hard kill, 
             # or we stop gracefully. Given "redundancy", let's save. 
-            # The prompt says "force a checkpoint and logs", not necessarily stop.
-            # But usually we want to stop to avoid hard kill corruption.
-            # Let's just force save.
-            
-            # Reset start time to avoid saving every single step after threshold if job continues
-            # Actually, we likely want to keep saving or just save once. 
+        # Actually, we likely want to keep saving or just save once. 
             # Let's bump start_time by 30 mins to allow another save in 30 mins if still running.
             self.start_time = time.time() - self.timeout_seconds + 1800 
+
+class ThroughputCallback(transformers.TrainerCallback):
+    """
+    Logs steps per second and samples per second at each logging step.
+    """
+    def __init__(self):
+        self.last_log_time = None
+        self.last_log_step = None
+        
+    def on_train_begin(self, args, state, control, **kwargs):
+        self.last_log_time = time.time()
+        self.last_log_step = 0
+        
+    def on_log(self, args, state, control, logs=None, **kwargs):
+        if state.global_step == 0:
+            return
+            
+        current_time = time.time()
+        if self.last_log_time is None:
+             self.last_log_time = current_time
+             self.last_log_step = state.global_step
+             return
+
+        time_diff = current_time - self.last_log_time
+        step_diff = state.global_step - self.last_log_step
+        
+        if time_diff > 0 and step_diff > 0:
+            steps_per_sec = step_diff / time_diff
+            
+            # Global batch size = per_device * world_size * grad_acc
+            # args.per_device_train_batch_size is accurate for this process
+            # args.world_size is total processes
+            # args.gradient_accumulation_steps is configured
+            
+            global_batch_size = (
+                args.per_device_train_batch_size 
+                * args.world_size 
+                * args.gradient_accumulation_steps
+            )
+            samples_per_sec = steps_per_sec * global_batch_size
+            
+            # Update logs dictionary which is sent to wandb
+            # We add it to the logs dict so the Trainer picks it up
+            if logs is not None:
+                logs["throughput/steps_per_sec"] = steps_per_sec
+                logs["throughput/samples_per_sec"] = samples_per_sec
+                
+        self.last_log_time = current_time
+        self.last_log_step = state.global_step 
