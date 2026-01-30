@@ -15,7 +15,7 @@ if transformers.utils.is_torch_flex_attn_available():
     from torch.nn.attention.flex_attention import BlockMask, create_block_mask
 else:
     # Register a fake type to avoid crashing for annotations and `isinstance` checks
-    BlockMask = torch.Tensor
+    class BlockMask: pass
 
 class A2DQwen3Config(transformers.Qwen3Config):
     model_type = "a2d-qwen3"  # <- NEW model_type
@@ -88,7 +88,7 @@ class A2DQwen3Model(transformers.Qwen3Model):
                 attention_mask = torch.ones(
                     inputs_embeds.shape[:2], 
                     device=inputs_embeds.device, 
-                    dtype=torch.long
+                    dtype=torch.bool
                 )
 
             # 2) If mask is not already a 4D attention mask → convert it

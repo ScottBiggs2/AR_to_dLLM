@@ -1,112 +1,112 @@
-2026-01-30 00:00:23   0%|          | 0/500 [00:00<?, ?it/s]Traceback (most recent call last):
-2026-01-30 00:00:24   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/train_qwen3_mdlm.py", line 21, in <module>
-2026-01-30 00:00:24     base_train()
-2026-01-30 00:00:24   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/examples/a2d/mdlm/sft.py", line 133, in train
-2026-01-30 00:00:24     trainer.train()
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2325, in train
-2026-01-30 00:00:24     return inner_training_loop(
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2674, in _inner_training_loop
-2026-01-30 00:00:24     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 4020, in training_step
-2026-01-30 00:00:24     loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
-2026-01-30 00:00:24   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/core/trainers/mdlm.py", line 176, in compute_loss
-2026-01-30 00:00:24     outputs = model(input_ids=noised_input_ids, attention_mask=attention_mask)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
-2026-01-30 00:00:24     return self._call_impl(*args, **kwargs)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
-2026-01-30 00:00:24     return forward_call(*args, **kwargs)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/utils/nvtx.py", line 20, in wrapped_fn
-2026-01-30 00:00:24     ret_val = func(*args, **kwargs)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 2178, in forward
-2026-01-30 00:00:24     loss = self.module(*inputs, **kwargs)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
-2026-01-30 00:00:24     return self._call_impl(*args, **kwargs)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1603, in _call_impl
-2026-01-30 00:00:24     result = forward_call(*args, **kwargs)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/utils/generic.py", line 918, in wrapper
-2026-01-30 00:00:24     output = func(self, *args, **kwargs)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 480, in forward
-2026-01-30 00:00:24     outputs: BaseModelOutputWithPast = self.model(
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
-2026-01-30 00:00:24     return self._call_impl(*args, **kwargs)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
-2026-01-30 00:00:24     return forward_call(*args, **kwargs)
-2026-01-30 00:00:24   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/models/qwen3/modeling_qwen3.py", line 120, in forward
-2026-01-30 00:00:24     hidden_states = decoder_layer(
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/modeling_layers.py", line 94, in __call__
-2026-01-30 00:00:24     return super().__call__(*args, **kwargs)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
-2026-01-30 00:00:24     return self._call_impl(*args, **kwargs)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
-2026-01-30 00:00:24     return forward_call(*args, **kwargs)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/utils/deprecation.py", line 172, in wrapped_func
-2026-01-30 00:00:24     return func(*args, **kwargs)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 260, in forward
-2026-01-30 00:00:24     hidden_states, _ = self.self_attn(
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
-2026-01-30 00:00:24     return self._call_impl(*args, **kwargs)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
-2026-01-30 00:00:24     return forward_call(*args, **kwargs)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/utils/deprecation.py", line 172, in wrapped_func
-2026-01-30 00:00:24     return func(*args, **kwargs)
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 216, in forward
-2026-01-30 00:00:24     attn_output, attn_weights = attention_interface(
-2026-01-30 00:00:24   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/integrations/sdpa_attention.py", line 96, in sdpa_attention_forward
-2026-01-30 00:00:24     attn_output = torch.nn.functional.scaled_dot_product_attention(
-2026-01-30 00:00:24 RuntimeError: Expected attn_mask dtype to be bool or float or to match query dtype, but got attn_mask.dtype: long int and  query.dtype: c10::BFloat16 instead.
-2026-01-30 00:00:24 [rank0]: Traceback (most recent call last):
-2026-01-30 00:00:24 [rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/train_qwen3_mdlm.py", line 21, in <module>
-2026-01-30 00:00:24 [rank0]:     base_train()
-2026-01-30 00:00:24 [rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/examples/a2d/mdlm/sft.py", line 133, in train
-2026-01-30 00:00:24 [rank0]:     trainer.train()
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2325, in train
-2026-01-30 00:00:24 [rank0]:     return inner_training_loop(
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2674, in _inner_training_loop
-2026-01-30 00:00:24 [rank0]:     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 4020, in training_step
-2026-01-30 00:00:24 [rank0]:     loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
-2026-01-30 00:00:24 [rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/core/trainers/mdlm.py", line 176, in compute_loss
-2026-01-30 00:00:24 [rank0]:     outputs = model(input_ids=noised_input_ids, attention_mask=attention_mask)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
-2026-01-30 00:00:24 [rank0]:     return self._call_impl(*args, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
-2026-01-30 00:00:24 [rank0]:     return forward_call(*args, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/utils/nvtx.py", line 20, in wrapped_fn
-2026-01-30 00:00:24 [rank0]:     ret_val = func(*args, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 2178, in forward
-2026-01-30 00:00:24 [rank0]:     loss = self.module(*inputs, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
-2026-01-30 00:00:24 [rank0]:     return self._call_impl(*args, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1603, in _call_impl
-2026-01-30 00:00:24 [rank0]:     result = forward_call(*args, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/utils/generic.py", line 918, in wrapper
-2026-01-30 00:00:24 [rank0]:     output = func(self, *args, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 480, in forward
-2026-01-30 00:00:24 [rank0]:     outputs: BaseModelOutputWithPast = self.model(
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
-2026-01-30 00:00:24 [rank0]:     return self._call_impl(*args, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
-2026-01-30 00:00:24 [rank0]:     return forward_call(*args, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/models/qwen3/modeling_qwen3.py", line 120, in forward
-2026-01-30 00:00:24 [rank0]:     hidden_states = decoder_layer(
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/modeling_layers.py", line 94, in __call__
-2026-01-30 00:00:24 [rank0]:     return super().__call__(*args, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
-2026-01-30 00:00:24 [rank0]:     return self._call_impl(*args, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
-2026-01-30 00:00:24 [rank0]:     return forward_call(*args, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/utils/deprecation.py", line 172, in wrapped_func
-2026-01-30 00:00:24 [rank0]:     return func(*args, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 260, in forward
-2026-01-30 00:00:24 [rank0]:     hidden_states, _ = self.self_attn(
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
-2026-01-30 00:00:24 [rank0]:     return self._call_impl(*args, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
-2026-01-30 00:00:24 [rank0]:     return forward_call(*args, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/utils/deprecation.py", line 172, in wrapped_func
-2026-01-30 00:00:24 [rank0]:     return func(*args, **kwargs)
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 216, in forward
-2026-01-30 00:00:24 [rank0]:     attn_output, attn_weights = attention_interface(
-2026-01-30 00:00:24 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/integrations/sdpa_attention.py", line 96, in sdpa_attention_forward
-2026-01-30 00:00:24 [rank0]:     attn_output = torch.nn.functional.scaled_dot_product_attention(
-2026-01-30 00:00:24 [rank0]: RuntimeError: Expected attn_mask dtype to be bool or float or to match query dtype, but got attn_mask.dtype: long int and  query.dtype: c10::BFloat16 instead.
+2026-01-30 00:17:28   0%|          | 0/500 [00:00<?, ?it/s]Traceback (most recent call last):
+2026-01-30 00:17:29   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/train_qwen3_mdlm.py", line 21, in <module>
+2026-01-30 00:17:29     base_train()
+2026-01-30 00:17:29   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/examples/a2d/mdlm/sft.py", line 133, in train
+2026-01-30 00:17:29     trainer.train()
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2325, in train
+2026-01-30 00:17:29     return inner_training_loop(
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2674, in _inner_training_loop
+2026-01-30 00:17:29     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 4020, in training_step
+2026-01-30 00:17:29     loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+2026-01-30 00:17:29   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/core/trainers/mdlm.py", line 178, in compute_loss
+2026-01-30 00:17:29     outputs = model(input_ids=noised_input_ids, attention_mask=attention_mask)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+2026-01-30 00:17:29     return self._call_impl(*args, **kwargs)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+2026-01-30 00:17:29     return forward_call(*args, **kwargs)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/utils/nvtx.py", line 20, in wrapped_fn
+2026-01-30 00:17:29     ret_val = func(*args, **kwargs)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 2178, in forward
+2026-01-30 00:17:29     loss = self.module(*inputs, **kwargs)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+2026-01-30 00:17:29     return self._call_impl(*args, **kwargs)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1603, in _call_impl
+2026-01-30 00:17:29     result = forward_call(*args, **kwargs)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/utils/generic.py", line 918, in wrapper
+2026-01-30 00:17:29     output = func(self, *args, **kwargs)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 480, in forward
+2026-01-30 00:17:29     outputs: BaseModelOutputWithPast = self.model(
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+2026-01-30 00:17:29     return self._call_impl(*args, **kwargs)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+2026-01-30 00:17:29     return forward_call(*args, **kwargs)
+2026-01-30 00:17:29   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/models/qwen3/modeling_qwen3.py", line 120, in forward
+2026-01-30 00:17:29     hidden_states = decoder_layer(
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/modeling_layers.py", line 94, in __call__
+2026-01-30 00:17:29     return super().__call__(*args, **kwargs)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+2026-01-30 00:17:29     return self._call_impl(*args, **kwargs)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+2026-01-30 00:17:29     return forward_call(*args, **kwargs)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/utils/deprecation.py", line 172, in wrapped_func
+2026-01-30 00:17:29     return func(*args, **kwargs)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 260, in forward
+2026-01-30 00:17:29     hidden_states, _ = self.self_attn(
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+2026-01-30 00:17:29     return self._call_impl(*args, **kwargs)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+2026-01-30 00:17:29     return forward_call(*args, **kwargs)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/utils/deprecation.py", line 172, in wrapped_func
+2026-01-30 00:17:29     return func(*args, **kwargs)
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 216, in forward
+2026-01-30 00:17:29     attn_output, attn_weights = attention_interface(
+2026-01-30 00:17:29   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/integrations/sdpa_attention.py", line 96, in sdpa_attention_forward
+2026-01-30 00:17:29     attn_output = torch.nn.functional.scaled_dot_product_attention(
+2026-01-30 00:17:29 RuntimeError: Expected attn_mask dtype to be bool or float or to match query dtype, but got attn_mask.dtype: long int and  query.dtype: c10::BFloat16 instead.
+2026-01-30 00:17:29 [rank0]: Traceback (most recent call last):
+2026-01-30 00:17:29 [rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/scripts/train_qwen3_mdlm.py", line 21, in <module>
+2026-01-30 00:17:29 [rank0]:     base_train()
+2026-01-30 00:17:29 [rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/examples/a2d/mdlm/sft.py", line 133, in train
+2026-01-30 00:17:29 [rank0]:     trainer.train()
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2325, in train
+2026-01-30 00:17:29 [rank0]:     return inner_training_loop(
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 2674, in _inner_training_loop
+2026-01-30 00:17:29 [rank0]:     tr_loss_step = self.training_step(model, inputs, num_items_in_batch)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/trainer.py", line 4020, in training_step
+2026-01-30 00:17:29 [rank0]:     loss = self.compute_loss(model, inputs, num_items_in_batch=num_items_in_batch)
+2026-01-30 00:17:29 [rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/core/trainers/mdlm.py", line 178, in compute_loss
+2026-01-30 00:17:29 [rank0]:     outputs = model(input_ids=noised_input_ids, attention_mask=attention_mask)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+2026-01-30 00:17:29 [rank0]:     return self._call_impl(*args, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+2026-01-30 00:17:29 [rank0]:     return forward_call(*args, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/utils/nvtx.py", line 20, in wrapped_fn
+2026-01-30 00:17:29 [rank0]:     ret_val = func(*args, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/deepspeed/runtime/engine.py", line 2178, in forward
+2026-01-30 00:17:29 [rank0]:     loss = self.module(*inputs, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+2026-01-30 00:17:29 [rank0]:     return self._call_impl(*args, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1603, in _call_impl
+2026-01-30 00:17:29 [rank0]:     result = forward_call(*args, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/utils/generic.py", line 918, in wrapper
+2026-01-30 00:17:29 [rank0]:     output = func(self, *args, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 480, in forward
+2026-01-30 00:17:29 [rank0]:     outputs: BaseModelOutputWithPast = self.model(
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+2026-01-30 00:17:29 [rank0]:     return self._call_impl(*args, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+2026-01-30 00:17:29 [rank0]:     return forward_call(*args, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/home/biggs.s/AR_to_dLLM/AR_to_dLLM/dllm/dllm/pipelines/a2d/models/qwen3/modeling_qwen3.py", line 120, in forward
+2026-01-30 00:17:29 [rank0]:     hidden_states = decoder_layer(
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/modeling_layers.py", line 94, in __call__
+2026-01-30 00:17:29 [rank0]:     return super().__call__(*args, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+2026-01-30 00:17:29 [rank0]:     return self._call_impl(*args, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+2026-01-30 00:17:29 [rank0]:     return forward_call(*args, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/utils/deprecation.py", line 172, in wrapped_func
+2026-01-30 00:17:29 [rank0]:     return func(*args, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 260, in forward
+2026-01-30 00:17:29 [rank0]:     hidden_states, _ = self.self_attn(
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1553, in _wrapped_call_impl
+2026-01-30 00:17:29 [rank0]:     return self._call_impl(*args, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1562, in _call_impl
+2026-01-30 00:17:29 [rank0]:     return forward_call(*args, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/utils/deprecation.py", line 172, in wrapped_func
+2026-01-30 00:17:29 [rank0]:     return func(*args, **kwargs)
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/models/qwen3/modeling_qwen3.py", line 216, in forward
+2026-01-30 00:17:29 [rank0]:     attn_output, attn_weights = attention_interface(
+2026-01-30 00:17:29 [rank0]:   File "/scratch/biggs.s/project_envs/qwen3_dllm/lib/python3.10/site-packages/transformers/integrations/sdpa_attention.py", line 96, in sdpa_attention_forward
+2026-01-30 00:17:29 [rank0]:     attn_output = torch.nn.functional.scaled_dot_product_attention(
+2026-01-30 00:17:29 [rank0]: RuntimeError: Expected attn_mask dtype to be bool or float or to match query dtype, but got attn_mask.dtype: long int and  query.dtype: c10::BFloat16 instead.
