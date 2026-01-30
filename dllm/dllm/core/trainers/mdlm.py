@@ -150,6 +150,8 @@ class MDLMTrainer(transformers.Trainer):
             inputs["labels"],
             inputs.get("attention_mask", None),
         )
+        if attention_mask is not None:
+            attention_mask = attention_mask.to(dtype=torch.bool)
         b, l = input_ids.shape
         maskable_mask = labels != -100  # [b, l]
 
